@@ -109,7 +109,7 @@ $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase());
                     <div class="CenterPriceLeftChild">
                         <p class="StockItemPriceText"><b><?php if($StockItem['SellPrice'] > 0 ){print sprintf("€ %.2f", $StockItem['SellPrice']);} else { print("Product niet beschikbaar."); } ?></b></p>
                         <h6> Inclusief BTW </h6>
-                        <a href="/nerdygadgets-main/cart.php?addToCart=<?php echo $StockItem['StockItemID'] ?>&Quantity=1">
+                        <a href="/nerdygadgets-main/cart.php?action=addToCart&productId=<?php echo $StockItem['StockItemID'] ?>">
                             <button class="btn btn-primary button" type="button">In winkelwagen</button>
                         </a>
                     </div>
