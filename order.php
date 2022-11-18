@@ -45,6 +45,11 @@
         margin-top: 15px;
     }
 
+    <?php
+    $totalPrice = 0;
+    foreach(getCartItems() as $productId => $product){
+    $totalPrice += $product['SellPrice'] * $product['quantityInCart'];}
+    ?>
 
 </style>
 <div class="row">
@@ -54,13 +59,10 @@
             <!-- Create a table to display the products in cart -->
             <table class="table table-striped" style="color: white;">
                         <thead>
-                            <tr>
-                                <th scope="col">Afbeelding</th>
+                            <tr>   
                                 <th scope="col">Product</th>
-                                <th scope="col">Aantal</th>
-                                <th scope="col">Prijs</th>
+                                <th scope="col">Prijs p/s</th>
                                 <th scope="col">Totaal</th>
-                                <th scope="col"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,37 +73,13 @@
                                     ?>
                                     <tr>
                                         <td>
-                                            <img style="max-width: 200px;" src="/nerdygadgets-main/Public/StockGroupIMG/<?php echo $product['BackupImagePath'] ?>" alt="">
-                                        </td>
-                                        <td>
                                             <?php echo $product['StockItemName']; ?>
-                                        </td>
-                                        <td>
-                                            <form action="/nerdygadgets-main/cart.php" method="get">
-                                                <input type="number" name="quantity" value="<?php echo $product['quantityInCart']; ?>">
-                                                <input type="hidden" name="action" value="changeQuantity">
-                                                <input type="hidden" name="productId" value="<?php echo $product['StockItemID']; ?>">
-                                                <input type="submit" value="Wijzig" class="changeQuantity">   
-                                            </form>
                                         </td>
                                         <!-- format the price as: €49,99 -->
                                         <td><?php echo '€' . number_format($product['SellPrice'], 2, ',', '.'); ?></td>
                                         <!-- display total for that current item(s) -->
                                         <td><?php echo '€' . number_format($product['SellPrice'] * $product['quantityInCart'], 2, ',', '.'); ?></td>
                                         <!-- Totaal laten zien: -->
-                                        <td>
-                                            <form action="/nerdygadgets-main/cart.php">
-                                                <input type="hidden" name="action" value="addOneToCart">
-                                                <input type="hidden" name="productId" value="<?php echo $product['StockItemID']; ?>">
-                                                <input type="submit" value="+" class="addQuantity">
-                                            </form>
-
-                                            <form action="/nerdygadgets-main/cart.php">
-                                                <input type="hidden" name="action" value="removeOneFromCart">
-                                                <input type="hidden" name="productId" value="<?php echo $product['StockItemID']; ?>">
-                                                <input type="submit" value="-" class="removeQuantity">
-                                            </form>
-                                        </td>
                                     </tr>
                                     <?php
                                 }
@@ -110,9 +88,8 @@
                     </table>    
                     <div class="row">
                         <div class="col-12" style="position: relative;">
-                            <h3 class="StockItemNameViewSize StockItemName">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
-                            <!-- add a button to view cart -->
-                            <a href="/nerdygadgets-main/order.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: 15px; right: 0;">Afrekenen</a>
+                        <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; right: 0;">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
+                            <a href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 0;">Terug naar winkelmand</a>
                     </div>
         </div>
     </div>
