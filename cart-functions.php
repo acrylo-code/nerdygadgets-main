@@ -170,3 +170,13 @@ function handleCartAction($action){
             break;
     }
 }
+
+// make a function for the total number of items including quantity in cart
+function getTotalItemsInCart(){
+    $cart = getCart();
+    $totalItems = 0;
+    foreach ($cart as $productId => $quantity){
+        $totalItems += $quantity;
+    }
+    return $totalItems;
+}

@@ -52,7 +52,8 @@ $databaseConnection = connectToDatabase();
             <li>
                 <a href="/nerdygadgets-main/cart.php" class="HrefDecoration"><i aria-hidden="true">
                 <img src="Public\ProductIMGHighRes\cart.png" alt="cart" width="40" height="32">
-            </i> Winkelmand   </a>
+            </i> Winkelmand</a>
+            <span class="badge badge-dark"><?php echo getTotalItemsInCart(); ?></span>
             </li>
             <li>
                 <a href="/nerdygadgets-main/browse.php" class="HrefDecoration"><i class="fas fa-search search"></i> Zoeken</a>

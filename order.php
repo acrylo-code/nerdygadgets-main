@@ -51,17 +51,19 @@
     $totalPrice += $product['SellPrice'] * $product['quantityInCart'];}
     ?>
 
+
+
 </style>
 <div class="row">
     <div id="CenteredContent">
         <div id="ArticleHeader">
-            <h2 class="StockItemNameViewSize StockItemName">Winkelmandje</h2>
+            <h2 class="StockItemNameViewSize StockItemName">Jouw bestelling.</h2>
             <!-- Create a table to display the products in cart -->
             <table class="table table-striped" style="color: white;">
                         <thead>
                             <tr>   
                                 <th scope="col">Product</th>
-                                <th scope="col">Prijs p/s</th>
+                                <th scope="col">Aantal</th>
                                 <th scope="col">Totaal</th>
                             </tr>
                         </thead>
@@ -76,7 +78,7 @@
                                             <?php echo $product['StockItemName']; ?>
                                         </td>
                                         <!-- format the price as: €49,99 -->
-                                        <td><?php echo '€' . number_format($product['SellPrice'], 2, ',', '.'); ?></td>
+                                        <td><?php echo ($product['quantityInCart']); ?></td>
                                         <!-- display total for that current item(s) -->
                                         <td><?php echo '€' . number_format($product['SellPrice'] * $product['quantityInCart'], 2, ',', '.'); ?></td>
                                         <!-- Totaal laten zien: -->
@@ -85,8 +87,31 @@
                                 }
                             ?>
                         </tbody>
-                    </table>    
+                    </table>
+                    <?php
+                    $fname = "";
+                    $lname = "";
+                    if(isset($_GET["knop"])) {
+                        $fname = $_GET["fname"];
+                        $lname = $_GET["lname"];
+                        if($fname == "" || $lname == "") {
+                            print("<p style=color:red>Vul alle velden in!</p>");
+                            } elseif (!preg_match("/^[a-zA-Z ]*$/",$fname) || !preg_match("/^[a-zA-Z ]*$/",$lname )) {
+                                print("<p style=color:red>Alleen letters en spaties zijn toegestaan!</p>");
+                            } 
+                            else {
+                                print("<p style=color:lightgreen> Bedankt voor het bestellen!</p>");
+                            }
+                        }
+                    ?>    
                     <div class="row">
+                    <form  method="GET" action="/nerdygadgets-main/order.php">
+                              <label for="fname">voornaam:</label><br>
+                              <input type="text" name="fname" value="<?php print($fname);?>">
+                              <label for="fname">achternaam:</label><br>
+                              <input type="text" name="lname" value="<?php print($lname);?>"><br><br>
+                              <input type="submit" name="knop" class="btn btn-primary checkoutbtn" value="Submit">
+                    </form>
                         <div class="col-12" style="position: relative;">
                         <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; right: 0;">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
                             <a href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 0;">Terug naar winkelmand</a>
