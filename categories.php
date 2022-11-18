@@ -11,7 +11,7 @@ $StockGroups = getStockGroups($databaseConnection);
         foreach ($StockGroups as $StockGroup) {
             if ($i < 6) {
                 ?>
-                <a href="<?php print "nerdygadgets-main/browse.php?category_id=";
+                <a href="<?php print "/nerdygadgets-main/browse.php?category_id=";
                 print $StockGroup["StockGroupID"]; ?>">
                     <div id="StockGroup<?php print $i + 1; ?>"
                          style="background-image: url('Public/StockGroupIMG/<?php print $StockGroup["ImagePath"]; ?>')"

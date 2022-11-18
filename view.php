@@ -74,7 +74,7 @@ $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase());
                                 <?php for ($i = 0; $i < count($StockItemImage); $i++) {
                                     ?>
                                     <div class="carousel-item <?php print ($i == 0) ? 'active' : ''; ?>">
-                                        <img src="/Public/StockItemIMG/<?php print $StockItemImage[$i]['ImagePath'] ?>">
+                                        <img src="/nerdygadgets-main/Public/StockItemIMG/<?php print $StockItemImage[$i]['ImagePath'] ?>">
                                     </div>
                                 <?php } ?>
                             </div>
@@ -93,7 +93,7 @@ $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase());
             } else {
                 ?>
                 <div id="ImageFrame"
-                     style="background-image: url('/Public/StockGroupIMG/<?php print $StockItem['BackupImagePath']; ?>'); background-size: cover;"></div>
+                     style="background-image: url('/nerdygadgets-main/Public/StockGroupIMG/<?php print $StockItem['BackupImagePath']; ?>'); background-size: cover;"></div>
                 <?php
             }
             ?>

@@ -29,15 +29,27 @@ function saveCart($cart){
 
 
 function addToCart($stockItemID){
-    $cart = getCart();    
+    $product = getStockItem($stockItemID, connectToDatabase())['QuantityOnHand'];
+    $stock = (int) filter_var($product, FILTER_SANITIZE_NUMBER_INT);
+
+    // Haalt het winkelwagentje op (key-value array van StrockItemID: aantal, heeft geen info over de productinformatie)
+    $cart = getCart();
+    // Checkt de string op SQL injectie en gaat verder als de string veilig is.
     if (!isStringVulnerable($stockItemID)){
+        // Checkt of het product in ons winkelwagentje bestaat
         if(array_key_exists($stockItemID, $cart)){
-            $cart[$stockItemID] += 1;                  
+            // check if the the amount in cart + 1 is more than the stock
+            if($cart[$stockItemID] > $stock){
+                $cart[$stockItemID] = $stock;
+            } else{
+                $cart[$stockItemID] += 1;
+            }
         }else{
-            $cart[$stockItemID] = 1;       
+            // Voeg anders aantal 1 van dat product toe.
+            $cart[$stockItemID] = 1;
         }
     }
-    saveCart($cart); 
+    saveCart($cart);
 }
 
 function removeOneFromCart($productId){
@@ -52,7 +64,7 @@ function removeOneFromCart($productId){
                 $cart[$productId]--;
             }
             
-        } 
+        }
         saveCart($cart);   
     }  
 }
@@ -82,16 +94,28 @@ function getCartItems(){
 }
 
 function changeQuantity($productId, $quantity){
+    $product = getStockItem($productId, connectToDatabase())['QuantityOnHand'];
+    $stock = (int) filter_var($product, FILTER_SANITIZE_NUMBER_INT);
+
+
+    // Haalt het winkelwagentje op (key-value array van StrockItemID: aantal, heeft geen info over de productinformatie)
     $cart = getCart();
+    // Checkt de string op SQL injectie en gaat verder als de string veilig is.
     if (!isStringVulnerable($productId)){
+        // Checkt of het product in ons winkelwagentje bestaat
         if(array_key_exists($productId, $cart)){
+            // Als aantal gelijk aan of lager dan 0 is, haal het product uit het winkelwagentje.
             if($quantity <= 0){
                 unset($cart[$productId]);
+            } elseif($quantity >= $stock){
+                $cart[$productId] = $stock;
             } else {
+                // Pas anders het aantal aan naar de opgegeven $quantitiy
                 $cart[$productId] = $quantity;
             }
         }
     }
+    // Sla het winkelwagentje op in de sessie
     saveCart($cart);
 }
 
@@ -110,7 +134,7 @@ function handleCartAction($action){
     $quantity = $_GET['quantity'];
 
     switch ($action) {
-        // Voorbeeld url: /nerdygadgets-main/cart.php?action=addToCart&productId=1
+        // Vtoorbeeld url: /nerdygadges-main/cart.php?action=addToCart&productId=1
         // Required: productId
         case 'addToCart':
             if(isset($productId)){
