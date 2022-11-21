@@ -104,6 +104,10 @@
                             }
                         }
                     ?>    
+                    <div class="col-12" style="position: relative;">
+                        <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; right: 0;">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
+                            <a href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 0;">Terug naar winkelmand</a>
+                    </div>
                     <div class="row">
                     <form  method="GET" action="/nerdygadgets-main/order.php">
                               <label for="fname">voornaam:</label><br>
@@ -112,10 +116,6 @@
                               <input type="text" name="lname" value="<?php print($lname);?>"><br><br>
                               <input type="submit" name="knop" class="btn btn-primary checkoutbtn" value="Submit">
                     </form>
-                        <div class="col-12" style="position: relative;">
-                        <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; right: 0;">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
-                            <a href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 0;">Terug naar winkelmand</a>
-                    </div>
         </div>
     </div>
 </div>

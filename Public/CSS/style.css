@@ -479,3 +479,8 @@ ul#ul-class-price li {
     border: 1px rgb(98, 158, 255) solid;
     color: #fff;
 }
+.itemCount {
+    position: absolute;
+    left: 63px;
+    top: 70px;
+  }
