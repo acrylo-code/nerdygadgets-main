@@ -46,13 +46,11 @@ $databaseConnection = connectToDatabase();
                 </li>
             </ul>
         </div>
-<!-- code voor US3: zoeken -->
-
 <ul id="ul-class-navigation">
             <li>
                 <a href="/nerdygadgets-main/cart.php" class="HrefDecoration"><i aria-hidden="true">
                 <img src="Public\ProductIMGHighRes\cart.png" alt="cart" width="40" height="32">
-            </i> Winkelmand</a>
+            </i> Winkelmand⠀⠀</a>
             <span class="badge badge-dark itemCount"  ><?php echo getTotalItemsInCart(); ?></span>
             
             </li>
@@ -60,8 +58,6 @@ $databaseConnection = connectToDatabase();
                 <a href="/nerdygadgets-main/browse.php" class="HrefDecoration"><i class="fas fa-search search"></i> Zoeken</a>
             </li>
         </ul>
-
-<!-- einde code voor US3 zoeken -->
     </div>
     <div class="row" id="Content">
         <div class="col-12">
