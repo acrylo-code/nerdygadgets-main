@@ -104,18 +104,73 @@
                             }
                         }
                     ?>    
-                    <div class="col-12" style="position: relative;">
+          <form method="post">
+            <div class="row">
+                <div class="col-md-5">
+                    <div class="orderpage__heading">
+                        <h4>Persoonlijke gegevens</h4>
+                    </div>
+                    <div class="orderpage__form">
+                        <div class="form-groups mb-4">
+                            <label>Voornaam</label>
+                            <input type="text" name="firstname" required="">
+                        </div>
+                        <div class="d-flex">
+                            <div class="form-groups mb-4 mr-3">
+                                <label>Tussenvoegsel</label>
+                                <input type="text" name="insertion">
+                            </div>
+                            <div class="form-groups mb-4">
+                                <label>Achternaam</label>
+                                <input type="text" name="lastname" required="">
+                            </div>
+                        </div>
+                        <div class="form-groups mb-4">
+                            <label>Email</label>
+                            <input type="email" name="email" required="">
+                        </div>
+                        <div class="form-groups mb-4">
+                            <label>Telefoonnummer</label>
+                            <input type="tel" name="phonenumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 offset-1">
+                    <div class="orderpage__heading">
+                        <h4>Verzendadres</h4>
+                    </div>
+                    <div class="orderpage__form">
+                        <div class="form-groups mb-4 d-flex">
+                            <div class="orderpage__form-item mr-3">
+                                <label>Straatnaam</label>
+                                <input type="text" name="street" value="">
+                            </div>
+                            <div class="orderpage__form-item">
+                                <label>Huisnummer</label>
+                                <input type="text" name="housenumber" value="">
+                            </div>
+                        </div>
+                        <div class="form-groups mb-4 d-flex">
+                            <div class="orderpage__form-item mr-3">
+                                <label>Stad</label>
+                                <input type="text" name="city" value="">
+                            </div>
+                            <div class="orderpage__form-item">
+                                <label>Postcode</label>
+                                <input type="text" name="postal" value="">
+                            </div>
+                        </div>
+                        <div class="orderpage__buttons mt-5">
+                        <div class="col-12" style="position: relative;">
                         <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; right: 0;">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
                             <a href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 0;">Terug naar winkelmand</a>
+                         </div>
+                        </div>
                     </div>
-                    <div class="row">
-                    <form  method="GET" action="/nerdygadgets-main/order.php">
-                              <label for="fname">voornaam:</label><br>
-                              <input type="text" name="fname" value="<?php print($fname);?>">
-                              <label for="fname">achternaam:</label><br>
-                              <input type="text" name="lname" value="<?php print($lname);?>"><br><br>
-                              <input type="submit" name="knop" class="btn btn-primary checkoutbtn" value="Submit">
-                    </form>
+                </div>
+            </div>
+        </form>
+                </div>
         </div>
     </div>
 </div>

@@ -46,18 +46,19 @@ $databaseConnection = connectToDatabase();
                 </li>
             </ul>
         </div>
-<ul id="ul-class-navigation">
-            <li>
-                <a href="/nerdygadgets-main/cart.php" class="HrefDecoration"><i aria-hidden="true">
-                <img src="Public\ProductIMGHighRes\cart.png" alt="cart" width="40" height="32">
-            </i> Winkelmand⠀⠀</a>
-            <span class="badge badge-dark itemCount"  ><?php echo getTotalItemsInCart(); ?></span>
-            
-            </li>
-            <li>
-                <a href="/nerdygadgets-main/browse.php" class="HrefDecoration"><i class="fas fa-search search"></i> Zoeken</a>
-            </li>
-        </ul>
+        <div class='navigation_bar'>
+            <ul id="ul-class-navigation">
+                <li>
+                    <a href="/nerdygadgets-main/cart.php" class="HrefDecoration "><i aria-hidden="true">
+                    <img src="Public\ProductIMGHighRes\cart.png" alt="cart" width="40" height="32">
+                </i>⠀</a>
+                <span class="badge badge-dark itemCount"  ><?php echo getTotalItemsInCart(); ?></span>
+                </li>
+                <li>
+                    <a href="/nerdygadgets-main/browse.php" class="HrefDecoration"><i class="fas fa-search search"></i></a>
+                </li>
+            </ul>
+        </div>
     </div>
     <div class="row" id="Content">
         <div class="col-12">
