@@ -29,6 +29,12 @@ $databaseConnection = connectToDatabase();
             </a></div>
         <div class="col-8" id="CategoriesBar">
             <ul id="ul-class">
+                <lu><div class="TIM col-4" id="SearchBar">
+                <form action="/nerdygadgets-main/browse.php" method="get">
+                <input type="text" name="search" placeholder="Zoeken..." id="SearchInput">
+                </form>
+                </div>
+                </lu>
                 <?php
                 $HeaderStockGroups = getHeaderStockGroups($databaseConnection);
 

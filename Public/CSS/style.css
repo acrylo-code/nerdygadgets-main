@@ -521,3 +521,10 @@ ul#ul-class-price li {
 .navigation_bar {
     right: 30px;
   }
+
+
+.TIM {
+    position: absolute;
+    left: 300px;
+    top: 30px;
+  }

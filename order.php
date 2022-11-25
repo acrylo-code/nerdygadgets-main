@@ -104,7 +104,7 @@
                             }
                         }
                     ?>    
-          <form method="post">
+          <form method="post" action="/nerdygadgets-main/order-functions.php">
             <div class="row">
                 <div class="col-md-5">
                     <div class="orderpage__heading">
@@ -113,25 +113,21 @@
                     <div class="orderpage__form">
                         <div class="form-groups mb-4">
                             <label>Voornaam</label>
-                            <input type="text" name="firstname" required="">
+                            <input type="text" name="Voornaam" required="">
                         </div>
                         <div class="d-flex">
-                            <div class="form-groups mb-4 mr-3">
-                                <label>Tussenvoegsel</label>
-                                <input type="text" name="insertion">
-                            </div>
                             <div class="form-groups mb-4">
                                 <label>Achternaam</label>
-                                <input type="text" name="lastname" required="">
+                                <input type="text" name="Achternaam" required="">
                             </div>
                         </div>
                         <div class="form-groups mb-4">
-                            <label>Email</label>
-                            <input type="email" name="email" required="">
+                            <label>Email adres</label>
+                            <input type="email" name="Email" required="">
                         </div>
                         <div class="form-groups mb-4">
                             <label>Telefoonnummer</label>
-                            <input type="tel" name="phonenumber">
+                            <input type="tel" name="Telefoonnummer">
                         </div>
                     </div>
                 </div>
@@ -143,27 +139,27 @@
                         <div class="form-groups mb-4 d-flex">
                             <div class="orderpage__form-item mr-3">
                                 <label>Straatnaam</label>
-                                <input type="text" name="street" value="">
+                                <input type="text" name="Adres" value="">
                             </div>
                             <div class="orderpage__form-item">
-                                <label>Huisnummer</label>
-                                <input type="text" name="housenumber" value="">
+                                <label>Wachtwoord</label>
+                                <input type="text" name="Wachtwoord" value="">
                             </div>
                         </div>
                         <div class="form-groups mb-4 d-flex">
                             <div class="orderpage__form-item mr-3">
                                 <label>Stad</label>
-                                <input type="text" name="city" value="">
+                                <input type="text" name="Woonplaats" value="">
                             </div>
                             <div class="orderpage__form-item">
                                 <label>Postcode</label>
-                                <input type="text" name="postal" value="">
+                                <input type="text" name="Postcode" value="">
                             </div>
                         </div>
                         <div class="orderpage__buttons mt-5">
                         <div class="col-12" style="position: relative;">
                         <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; right: 0;">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
-                            <a href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 0;">Terug naar winkelmand</a>
+                            <a href="/nerdygadgets-main/order-functions.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 0;">Afrekenen</a>
                          </div>
                         </div>
                     </div>

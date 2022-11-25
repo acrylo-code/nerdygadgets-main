@@ -336,6 +336,3 @@ if (isset($amount)) {
     ?>
 </div>
 
-<?php
-include __DIR__ . "/footer.php";
-?>
