@@ -239,9 +239,10 @@ ul#ul-class-navigation li {
     background-image: url("../ProductIMGHighRes/NerdyGadgetsLogo.png");
     width: 250px;
     height: 90px;
-    margin: 55px 55px 55px 10%;
+    margin: 25px 55px 55px 10%;
 }
 ul#ul-class li {
+    position: center;
     display: inline;
     color: white;
     margin-right: 1em;
@@ -524,7 +525,30 @@ ul#ul-class-price li {
 
 
 .TIM {
+    position: relative;
+    left: 160px;
+    top: 38px;
+    font-size: 17px;
+    font-weight: bold;   
+}
+
+
+.TIM:hover {
+    color: rgb(75, 75, 245);
+    opacity: 0.9; 
+}
+
+.TIM:hover::after {
+    content: "";
     position: absolute;
-    left: 300px;
-    top: 30px;
+    left: 15px;
+    bottom: -1px;
+    width: 94%;
+    height: 5px;
+    background-color: rgb(133, 131, 249);
+    transition: 0.5s;
   }
+
+
+    
+

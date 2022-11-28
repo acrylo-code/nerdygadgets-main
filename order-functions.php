@@ -4,32 +4,34 @@ include_once "header.php";
 
 // $klantgegevens = [ 
 //     "Voornaam" => $_POST['Voornaam'],
+//     "Achternaam" => $_POST['Achternaam'],
 //     "Achternaam" => "Jansen",
 //     "Adres" => "Jansstraat 1",
 //     "Postcode" => "1234AB",
 //     "Woonplaats" => "Jansstad",
 //     "Telefoonnummer" => "dsd",
 //     "Email" => "Nederland",
-//     "Wachtwoord" => "test" 
+//     "Huisnummer" => "1" 
 // ];
-$gegevens = [];
+$klantgegeven = [];
 
-$gegevens = [
+$klantgegeven = [
     "Voornaam" => $_POST['Voornaam'],
+    "Tussenvoegsel" => $_POST['Tussenvoegsel'],
     "Achternaam" => $_POST['Achternaam'],
     "Adres" => $_POST['Adres'],
     "Postcode" => $_POST['Postcode'],
     "Woonplaats" => $_POST['Woonplaats'],
     "Telefoonnummer" => $_POST['Telefoonnummer'],
     "Email" => $_POST['Email'],
-    "Wachtwoord" => $_POST['Wachtwoord']
+    "Huisnummer" => $_POST['Huisnummer']
 ];
 
-var_dump($gegevens);
 
-// if( isset($_POST['Voornaam'] && $_POST['Achternaam'] && $_POST['Adres'] && $_POST['Postcode'] && $_POST['Woonplaats'] && $_POST['Telefoonnummer'] && $_POST['Email'] && $_POST['Wachtwoord'])){
-    
-// }
+if(isset($_POST['Voornaam']) && isset($_POST['Achternaam']) && isset($_POST['Adres']) && isset($_POST['Postcode']) && isset($_POST['Woonplaats']) && isset($_POST['Telefoonnummer']) && isset($_POST['Email']) && isset($_POST['Huisnummer'])){
+    var_dump($klantgegeven);
+    var_dump($_SESSION['klantId']);
+}
 
 function register($klantgegevens){
     // Haal het winkelwagentje op
@@ -39,17 +41,18 @@ function register($klantgegevens){
     // Haal de huidige datum op
     $currentDate = date("Y-m-d H:i:s");
     // Maak een query voor het toevoegen aan het tabel "klantgegevens" maak gebruik van mysqli_stmt
-    $query = "INSERT INTO klantgegevens (Voornaam, Achternaam, Adres, Postcode, Woonplaats, Telefoonnummer, Email, Wachtwoord) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    $query = "INSERT INTO klantgegevens (Voornaam, Tussenvoegsel, Achternaam, Adres, Postcode, Woonplaats, Telefoonnummer, Email, Huisnummer) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     $statement = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($statement, "ssssssss", 
-        $klantgegevens["Voornaam"], 
+        $klantgegevens["Voornaam"],
+        $klantgegevens["Tussenvoegsel"],
         $klantgegevens["Achternaam"], 
         $klantgegevens["Adres"], 
         $klantgegevens["Postcode"], 
         $klantgegevens["Woonplaats"], 
         $klantgegevens["Telefoonnummer"], 
         $klantgegevens["Email"], 
-        $klantgegevens["Wachtwoord"]);
+        $klantgegevens["Huisnummer"]);
     
     // Voer de query uit
     mysqli_stmt_execute($statement);
@@ -115,13 +118,14 @@ function addOrder($userId){
 // Voorbeeld van $klantgegevens:
 // $klantgegevens = [ 
 //     "Voornaam" => "Jan",
+//     "Tussenvoegsel" => "de",
 //     "Achternaam" => "Jansen",
 //     "Adres" => "Jansstraat 1",
 //     "Postcode" => "1234AB",
 //     "Woonplaats" => "Jansstad",
 //     "Telefoonnummer" => "dsd",
 //     "Email" => "Nederland",
-//     "Wachtwoord" => "test" 
+//     "Huisnummer" => "1" 
 // ];
 
 // Voert alle helper functies uit om een bestelling te plaatsen
