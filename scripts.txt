@@ -1,0 +1,38 @@
+-- Create the table klantgegevens if it doesn't exist
+CREATE TABLE IF NOT EXISTS `klantgegevens` (
+  `KlantID` int(11) NOT NULL AUTO_INCREMENT,
+  `Voornaam` varchar(255) NOT NULL,
+  `Tussenvoegsel` varchar(255),
+  `Achternaam` varchar(255) NOT NULL,
+  `Adres` varchar(255) NOT NULL,
+  `Postcode` varchar(255) NOT NULL,
+  `Woonplaats` varchar(255) NOT NULL,
+  `Telefoonnummer` varchar(255) NOT NULL,
+  `Email` varchar(255) NOT NULL,
+  `Huisnummer` int(11),
+  PRIMARY KEY (`KlantID`)
+);
+
+-- Create a table orders and let it have a foreign key to klantgegevens
+CREATE TABLE IF NOT EXISTS `bestellingen` (
+  `OrderID` int(11) NOT NULL AUTO_INCREMENT,
+  `KlantID` int(11) NOT NULL,
+  `OrderDatum` date NOT NULL,
+  `OrderTotaal` decimal(10,2) NOT NULL,
+  `Betaald` tinyint(1) NOT NULL,
+  PRIMARY KEY (`OrderID`),
+  KEY `KlantID` (`KlantID`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`KlantID`) REFERENCES `klantgegevens` (`KlantID`)
+);
+
+-- Create a table orderregels and let it have a foreign key to orders
+CREATE TABLE IF NOT EXISTS `bestellingen_rows` (
+  `OrderRegelID` int(11) NOT NULL AUTO_INCREMENT,
+  `OrderID` int(11) NOT NULL,
+  `ProductID` int(11) NOT NULL,
+  `Aantal` int(11) NOT NULL,
+  `Prijs` decimal(10,2) NOT NULL,
+  PRIMARY KEY (`OrderRegelID`),
+  KEY `OrderID` (`OrderID`),
+  CONSTRAINT `orderregels_ibfk_1` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`)
+);
