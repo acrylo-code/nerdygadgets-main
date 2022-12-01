@@ -59,6 +59,10 @@ $databaseConnection = connectToDatabase();
                     <a href="/nerdygadgets-main/cart.php" class="HrefDecoration "><i aria-hidden="true">
                     <img src="Public\ProductIMGHighRes\cart.png" alt="cart" width="40" height="32">
                 </i>
+                <li>⠀</a>
+                    <a href="/nerdygadgets-main/cart.php" class="HrefDecoration "><i aria-hidden="true">
+                    <img src="Public\ProductIMGHighRes\login.png" alt="login" width="40" height="32">
+                </i>
             </a>
                 <span class="badge badge-dark itemCount"  ><?php echo getTotalItemsInCart(); ?></span>
                 </li>                

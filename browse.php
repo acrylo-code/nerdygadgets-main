@@ -1,6 +1,8 @@
 <!-- dit bestand bevat alle code voor het productoverzicht -->
 <?php
 include __DIR__ . "/header.php";
+include_once "/cart-functions.php";
+
 
 $ReturnableResult = null;
 $Sort = "SellPrice";
@@ -76,7 +78,7 @@ switch ($SortOnPage) {
 $searchValues = explode(" ", $SearchString);
 
 $queryBuildResult = "";
-if ($SearchString != "") {
+if ($SearchString != "" && !isStringVulnerable($SearchString)) {
     for ($i = 0; $i < count($searchValues); $i++) {
         if ($i != 0) {
             $queryBuildResult .= "AND ";
