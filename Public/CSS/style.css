@@ -548,7 +548,9 @@ ul#ul-class-price li {
     background-color: rgb(133, 131, 249);
     transition: 0.5s;
   }
-
+  .padding_button {
+    padding: 10px 10px 10px 10px;
+  }
 
     
 

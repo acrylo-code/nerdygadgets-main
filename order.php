@@ -109,6 +109,9 @@
                 <div class="col-md-5">
                     <div class="orderpage__heading">
                         <h4>Persoonlijke gegevens</h4>
+                        <?php print("<p style=color:red>".$_SESSION['error']."</p>");
+                        $_SESSION['error'] = "";
+                        ?>
                     </div>
                     <div class="orderpage__form">
                         <div class="form-groups mb-4">
@@ -160,17 +163,18 @@
                                 <input type="text" name="Postcode" value="">
                             </div>
                         </div>
-                        <div class="orderpage__buttons mt-5">
-                        <div class="col-12" style="position: relative;">
-                        <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; right: 0;">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
-                            <input type="submit" value="Submit" href="/nerdygadgets-main/order-functions.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 0;">* zijn verplichtte velden.</a>
-                         </div>
+                        <div class="mt-5 d-flex">
+                            <div class="col-6" style="position: relative;">
+                            <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; left: 0;">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
+                                <input type="submit" value="Afrekenen" href="/nerdygadgets-main/order-functions.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: -300;">* zijn verplichte velden.</a>
+                                <!--<input type="button" value="Terug" href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 300;"></a> -->
+                            </div>
                         </div>
+                    </form>  
                     </div>
                 </div>
-            </div>
-        </form>
                 </div>
+            </div>
         </div>
     </div>
 </div>

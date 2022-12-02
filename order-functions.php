@@ -29,10 +29,14 @@ $klantgegeven = [
 
 
 if(isset($_POST['Voornaam']) && isset($_POST['Achternaam']) && isset($_POST['Adres']) && isset($_POST['Postcode']) && isset($_POST['Woonplaats']) && isset($_POST['Telefoonnummer']) && isset($_POST['Email']) && isset($_POST['Huisnummer'])){
-    var_dump($klantgegeven);
-    placeOrder($klantgegeven);
-    var_dump($_SESSION['klantId']);
-    
+// Test if string contains spaces
+if(strpos($_POST['Voornaam']," ") !== false || strpos($_POST['Achternaam']," ") !== false || strpos($_POST['Postcode']," ") !== false || strpos($_POST['Email']," ") !== false){
+  //goto order.php
+    $_SESSION['error'] = "Voornaam, Achternaam, Postcode en Email mogen geen spaties bevatten.";
+    header("Location: order.php");
+} else{
+    placeOrder($klantgegeven);    
+}
 }
 
 function register($klantgegevens){
