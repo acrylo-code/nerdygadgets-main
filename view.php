@@ -160,6 +160,7 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."° </a>"
                                 print $SpecText;
                             }
                             ?>
+                            
                         </td>
                     </tr>
                 <?php } ?>
@@ -170,6 +171,20 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."° </a>"
                 <?php
             }
             ?>
+        </div>
+        <div id="ReviewDescription">
+            <p>Geef een review over dit product.</p>
+
+            <form action="/nerdygadgets-main/view.php" method="post">
+                <div class="form-group">
+                    <label for="ReviewText">Review</label>
+                    <input type="number" class="form-control" id="ReviewText" name="ReviewText" min="1" max="5" required><br>
+                    <textarea class="form-control" id="ReviewText" name="ReviewText" rows="3" ></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" >Verstuur</button>
+            
+            
+            </form>
         </div>
         <?php
     } else {
