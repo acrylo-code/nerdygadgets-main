@@ -74,7 +74,7 @@
                                             <img style="max-width: 200px;" src="/nerdygadgets-main/Public/StockGroupIMG/<?php echo $product['BackupImagePath'] ?>" alt="">
                                         </td>
                                         <td>
-                                            <?php echo $product['StockItemName']; ?>
+                                           <?php echo $product['StockItemName']; ?>
                                         </td>
                                         <td>
                                             <form action="/nerdygadgets-main/cart.php" method="get">

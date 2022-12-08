@@ -30,12 +30,21 @@ $klantgegeven = [
 
 if(isset($_POST['Voornaam']) && isset($_POST['Achternaam']) && isset($_POST['Adres']) && isset($_POST['Postcode']) && isset($_POST['Woonplaats']) && isset($_POST['Telefoonnummer']) && isset($_POST['Email']) && isset($_POST['Huisnummer'])){
 // Test if string contains spaces
-if(strpos($_POST['Voornaam']," ") !== false || strpos($_POST['Achternaam']," ") !== false || strpos($_POST['Postcode']," ") !== false || strpos($_POST['Email']," ") !== false){
+// Test if string contains spaces or other characters
+if(!preg_match("/^[a-zA-Z]*$/",$_POST['Voornaam']) || !preg_match("/^[a-zA-Z]*$/",$_POST['Achternaam']) !== false 
+|| strpos($_POST['Postcode']," ") !== false || strpos($_POST['Email']," ") !== false){
   //goto order.php
-    $_SESSION['error'] = "Voornaam, Achternaam, Postcode en Email mogen geen spaties bevatten.";
+    $_SESSION['error'] = "Voornaam, Achternaam, Postcode en Email mogen geen spaties of andere karakters bevatten.";
     header("Location: order.php");
 } else{
-    placeOrder($klantgegeven);    
+    var_dump($row); 
+    placeOrder($klantgegeven);
+    var_dump($klantgegeven);
+    echo "<br>";
+    echo "Bestelling is geplaats<br><br>";
+    header("Location: https://bankieren.rabobank.nl/welcome/"); 
+    $cart = [];
+    saveCart($cart);
 }
 }
 
@@ -49,21 +58,13 @@ function register($klantgegevens){
     // Maak een query voor het toevoegen aan het tabel "klantgegevens" maak gebruik van mysqli_stmt
     $query = "INSERT INTO klantgegevens (Voornaam, Tussenvoegsel, Achternaam, Adres, Postcode, Woonplaats, Telefoonnummer, Email, Huisnummer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $statement = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($statement, "ssssssssi", 
-        $klantgegevens["Voornaam"],
-        $klantgegevens["Tussenvoegsel"],
-        $klantgegevens["Achternaam"], 
-        $klantgegevens["Adres"], 
-        $klantgegevens["Postcode"], 
-        $klantgegevens["Woonplaats"], 
-        $klantgegevens["Telefoonnummer"], 
-        $klantgegevens["Email"], 
-        $klantgegevens["Huisnummer"]);
+    mysqli_stmt_bind_param($statement, "ssssssssi", $klantgegevens["Voornaam"],$klantgegevens["Tussenvoegsel"],$klantgegevens["Achternaam"], $klantgegevens["Adres"], $klantgegevens["Postcode"], $klantgegevens["Woonplaats"], $klantgegevens["Telefoonnummer"], $klantgegevens["Email"], $klantgegevens["Huisnummer"]);
     
     // Voer de query uit
     mysqli_stmt_execute($statement);
     // Haal het laatst toegevoegde KlantID op
     $klantID = mysqli_insert_id($conn);
+    print (mysqli_insert_id($conn));
     $_SESSION['klantId'] = $klantID;
 }
 
@@ -75,7 +76,6 @@ function register($klantgegevens){
 //     "Prijs" => 0,
 // ];
 function addOrderRow($row){
-    var_dump($row);
     // Haal de database connectie op
     $conn = connectToDatabase();
     // Maak een query voor het toevoegen aan het tabel "orderregels" maak gebruik van mysqli_stmt
@@ -121,18 +121,7 @@ function addOrder($userId){
     }
 }
 
-// Voorbeeld van $klantgegevens:
-// $klantgegevens = [ 
-//     "Voornaam" => "Jan",
-//     "Tussenvoegsel" => "de",
-//     "Achternaam" => "Jansen",
-//     "Adres" => "Jansstraat 1",
-//     "Postcode" => "1234AB",
-//     "Woonplaats" => "Jansstad",
-//     "Telefoonnummer" => "dsd",
-//     "Email" => "Nederland",
-//     "Huisnummer" => "1" 
-// ];
+
 
 // Voert alle helper functies uit om een bestelling te plaatsen
 function placeOrder($klantgegevens){

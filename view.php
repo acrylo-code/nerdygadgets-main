@@ -4,6 +4,16 @@ include __DIR__ . "/header.php";
 
 $StockItem = getStockItem($_GET['id'], connectToDatabase());
 $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase()); 
+$ColdroomTemp = getColdroomTemp(connectToDatabase());
+var_dump($ColdroomTemp);
+
+foreach ($ColdroomTemp as $temp) {
+    $temp = $temp['Temperature'];
+    //calc avarige temp
+    $gemTemp += $temp;
+ }
+$gemTemp /= count($ColdroomTemp);
+$gemTemp = "<a class='StockItemName'>".$gemTemp."° </a>"
 ?>
 <style>
     .button {
@@ -97,13 +107,15 @@ $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase());
                 <?php
             }
             ?>
-
+            
 
             <h1 class="StockItemID">Artikelnummer: <?php print $StockItem["StockItemID"]; ?></h1>
             <h2 class="StockItemNameViewSize StockItemName">
                 <?php print $StockItem['StockItemName']; ?>
             </h2>
             <div class="QuantityText"><?php print $StockItem['QuantityOnHand']; ?></div>
+            <div class="QuantityText" style="padding-left: 220px"><?php if (isset($StockItem['IsChillerStock'])) {if ($StockItem['IsChillerStock'] == 1) { print ("De temperatuur van dit item is : ".$gemTemp);}}?>
+            </div>
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
@@ -116,6 +128,7 @@ $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase());
                 </div>
             </div>
         </div>
+        
 
         <div id="StockItemDescription">
             <h3>Artikel beschrijving</h3>
@@ -162,5 +175,4 @@ $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase());
     } else {
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
-
 </div>

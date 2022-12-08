@@ -88,22 +88,6 @@
                             ?>
                         </tbody>
                     </table>
-                    <?php
-                    $fname = "";
-                    $lname = "";
-                    if(isset($_GET["knop"])) {
-                        $fname = $_GET["fname"];
-                        $lname = $_GET["lname"];
-                        if($fname == "" || $lname == "") {
-                            print("<p style=color:red>Vul alle velden in!</p>");
-                            } elseif (!preg_match("/^[a-zA-Z ]*$/",$fname) || !preg_match("/^[a-zA-Z ]*$/",$lname )) {
-                                print("<p style=color:red>Alleen letters en spaties zijn toegestaan!</p>");
-                            } 
-                            else {
-                                print("<p style=color:lightgreen> Bedankt voor het bestellen!</p>");
-                            }
-                        }
-                    ?>    
           <form method="post" action="/nerdygadgets-main/order-functions.php">
             <div class="row">
                 <div class="col-md-5">
@@ -116,12 +100,12 @@
                     <div class="orderpage__form">
                         <div class="form-groups mb-4">
                             <label>Voornaam *</label>
-                            <input type="text" name="Voornaam" required="">
+                            <input type="text" name="Voornaam" required="" value="Voornaam">
                         </div>
                         <div class="d-flex">
                             <div class="form-groups mb-4 mr-3">
                                 <label>Achternaam *</label>
-                                <input type="text" name="Achternaam" required="">
+                                <input type="text" name="Achternaam" required="" value="Achternaam">
                             </div>
                             <div class="form-groups mb-2">
                                 <label>Tussenvoegsel</label>
@@ -130,11 +114,11 @@
                         </div>
                         <div class="form-groups mb-2">
                             <label>Email adres *</label>
-                            <input type="email" name="Email" required="">
+                            <input type="email" name="Email" required="" value="test@gmail.com">
                         </div>
                         <div class="form-groups mb-4">
                             <label>Telefoonnummer</label>
-                            <input type="tel" name="Telefoonnummer">
+                            <input type="tel" name="Telefoonnummer" value="06-12345678">
                         </div>
                     </div>
                 </div>
@@ -146,21 +130,21 @@
                         <div class="form-groups mb-4 d-flex">
                             <div class="orderpage__form-item mr-3">
                                 <label>Straatnaam *</label>
-                                <input type="text" name="Adres" value="">
+                                <input type="text" name="Adres" value="straatnaam">
                             </div>
                             <div class="orderpage__form-item">
                                 <label>Huisnummer *</label>
-                                <input type="number" name="Huisnummer" value="">
+                                <input type="number" name="Huisnummer" value="2">
                             </div>
                         </div>
                         <div class="form-groups mb-4 d-flex">
                             <div class="orderpage__form-item mr-3">
                                 <label>Stad *</label>
-                                <input type="text" name="Woonplaats" value="">
+                                <input type="text" name="Woonplaats" value="stad">
                             </div>
                             <div class="orderpage__form-item">
                                 <label>Postcode *</label>
-                                <input type="text" name="Postcode" value="">
+                                <input type="text" name="Postcode" value="1234DE">
                             </div>
                         </div>
                         <div class="mt-5 d-flex">

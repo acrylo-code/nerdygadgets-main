@@ -60,7 +60,7 @@ function getStockItem($id, $databaseConnection) {
             StockItemName,
             CONCAT('Voorraad: ',QuantityOnHand)AS QuantityOnHand,
             SearchDetails, 
-            (CASE WHEN (RecommendedRetailPrice*(1+(TaxRate/100))) > 50 THEN 0 ELSE 6.95 END) AS SendCosts, MarketingComments, CustomFields, SI.Video,
+            (CASE WHEN (RecommendedRetailPrice*(1+(TaxRate/100))) > 50 THEN 0 ELSE 6.95 END) AS SendCosts, MarketingComments, CustomFields, SI.Video, IsChillerStock,
             (SELECT ImagePath FROM stockgroups JOIN stockitemstockgroups USING(StockGroupID) WHERE StockItemID = SI.StockItemID LIMIT 1) as BackupImagePath   
             FROM stockitems SI 
             JOIN stockitemholdings SIH USING(stockitemid)
@@ -94,6 +94,17 @@ function getStockItemImage($id, $databaseConnection) {
     $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
 
     return $R;
+}
+
+function getColdroomTemp($databaseConnection) {
+    $Query = "
+    SELECT Temperature
+    FROM coldroomtemperatures";
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_execute($Statement);
+    $Result = mysqli_stmt_get_result($Statement);
+    $Coldroomtemp = mysqli_fetch_all($Result, MYSQLI_ASSOC);
+    return $Coldroomtemp;
 }
 
 include "cart-functions.php";

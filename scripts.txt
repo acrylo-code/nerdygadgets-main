@@ -36,3 +36,20 @@ CREATE TABLE IF NOT EXISTS `bestellingen_rows` (
   KEY `OrderID` (`OrderID`),
   CONSTRAINT `orderregels_ibfk_1` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`)
 );
+
+-- script om de img on de website te herstellen
+
+INSERT INTO stockitemimages (StockItemID, ImagePath)
+VALUES (223, 'Chocolate.jpg');
+INSERT INTO stockitemimages (StockItemID, ImagePath)
+VALUES (224, 'Chocolate.jpg');
+INSERT INTO stockitemimages (StockItemID, ImagePath)
+VALUES (225, 'Chocolate.jpg');
+INSERT INTO stockitemimages (StockItemID, ImagePath)
+VALUES (226, 'Chocolate.jpg');
+INSERT INTO stockitemimages (StockItemID, ImagePath)
+VALUES (227, 'Chocolate.jpg');
+INSERT INTO stockitemimages (StockItemID, ImagePath)
+VALUES (222, 'Chocolate.jpg');
+INSERT INTO stockitemimages (StockItemID, ImagePath)
+VALUES (220, 'Chocolate.jpg');

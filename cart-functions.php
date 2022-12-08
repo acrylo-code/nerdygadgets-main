@@ -6,7 +6,9 @@ $databaseConnection = connectToDatabase();
 // Checkt string op SQL injectie
 function isStringVulnerable($string) {
     $string = strtolower($string);
-    $vulnerable = array("select", "drop", "insert", "update", "delete", "alter", "create", "truncate", "union", "join", "where", "like", "--", ";", "=", "*", "&", "!", "?", ">", "<", "~", "`", "\"", "'", "\\", "/", ":", ",", ".", "|", "^", "$", "#", "@", "%", "&", ";", ")", "(", "}", "{", "]", "[", "}", "{");
+    $vulnerable = array("select", "drop", "insert", "update", "delete", "alter", "create", "truncate",
+     "union", "join", "where", "like", "--", ";", "=", "*", "&", "!", "?", ">", "<", "~", "`", "\"", "'",
+      "\\", "/", ":", ",", ".", "|", "^", "$", "#", "@", "%", "&", ";", ")", "(", "}", "{", "]", "[", "}", "{");
     foreach ($vulnerable as $vul) {
         if (strpos($string, $vul) !== false) {
             return true;
