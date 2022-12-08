@@ -1,12 +1,12 @@
 <!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
 include __DIR__ . "/header.php";
-
+?>
+<link rel="stylesheet" href="/nerdygadgets-main/Public/CSS/review.css">
+<?php
 $StockItem = getStockItem($_GET['id'], connectToDatabase());
 $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase()); 
 $ColdroomTemp = getColdroomTemp(connectToDatabase());
-var_dump($ColdroomTemp);
-
 foreach ($ColdroomTemp as $temp) {
     $temp = $temp['Temperature'];
     //calc avarige temp
@@ -173,16 +173,32 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."° </a>"
             ?>
         </div>
         <div id="ReviewDescription">
-            <p>Geef een review over dit product.</p>
-
-            <form action="/nerdygadgets-main/view.php" method="post">
-                <div class="form-group">
-                    <label for="ReviewText">Review</label>
-                    <input type="number" class="form-control" id="ReviewText" name="ReviewText" min="1" max="5" required><br>
-                    <textarea class="form-control" id="ReviewText" name="ReviewText" rows="3" ></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" >Verstuur</button>
+            <p>Laat hier een review achter:</p>
             
+            <div class="form-group">
+                <input type="text" class="form-control" id="title" name="title" placeholder="Titel van uw review">
+            <h3>Hoe zou u ons product beoordelen?</h3>
+            <div class="center">
+                    <div class="stars">
+                        <input type="radio" id="five" name="rate" value="5" />
+                        <label for="five"></label>
+                        <input type="radio" id="four" name="rate" value="4" />
+                        <label for="four"></label>
+                        <input type="radio" id="three" name="rate" value="3" />
+                        <label for="three"></label>
+                        <input type="radio" id="two" name="rate" value="2" />
+                        <label for="two"></label>
+                        <input type="radio" id="one" name="rate" value="1" />
+                        <label for="one"></label>
+                    </div>
+                </div>
+                <h3> Motiveer uw beoordeling:</h3>
+                <div class="form-group">
+                    <textarea class="form-control" id="ReviewText" name="ReviewText" rows="4" ></textarea>
+                </div>
+                    <a href="/nerdygadgets-main/review.php">
+                        <button class="btn btn-primary button" type="button">Verstuur</button>
+                    </a>
             
             </form>
         </div>

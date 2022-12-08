@@ -123,6 +123,7 @@ ul#ul-class-navigation li {
 .ImgFrame img {
     width: 230px;
     height: 230px;
+    
 }
 #StockItemFrameRight {
     float: right;
@@ -167,6 +168,7 @@ ul#ul-class-navigation li {
     background-color: rgb(36, 41, 143);
     float: left;
     margin-right: 10px;
+    border-radius: 12%;
 }
 .QuantityText {
     position: absolute;
@@ -232,6 +234,7 @@ ul#ul-class-navigation li {
     text-align: top;
     border-radius: 12px;
     top: -100px;
+    font-weight: bold;
 }
 .Labels {
     margin-bottom: 0;

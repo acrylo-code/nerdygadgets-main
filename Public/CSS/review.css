@@ -1,0 +1,42 @@
+/* * {
+    margin: 0;
+    padding: 0;
+} */
+
+
+.center {
+    position: relative;
+    left: -5%;
+    top: 20%;
+}
+.center .stars {
+    height: 50px;
+    width: 500px;
+    text-align: right;
+}
+.stars input {
+    display: none;
+}
+.stars label {
+    float: right;
+    font-size: 100px;
+    color: #bbb;
+    margin : 0 5px;
+    text-shadow: 1px 1px #bbb;
+}
+.stars label:before {
+    content: "★";
+}
+.stars input:checked ~ label{
+    color: gold;
+    text-shadow: 1px 1px #c60;
+}
+.stars:not(:checked) > label:hover,
+.stars:not(:checked) > label:hover ~ label {
+    color: gold;
+}
+.stars input:checked > label:hover,
+.stars input:checked > label:hover ~ label {
+    color: gold;
+    text-shadow: 1px 1px goldenrod;
+}
