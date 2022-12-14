@@ -1,5 +1,33 @@
 <?php include __DIR__ . "/header.php"; ?>
 <?php include_once __DIR__ . "/database.php"; ?>
+
+<style>
+    .checkoutbtn {
+        display: inline-block;
+        padding: 5px 5px;
+        font-size: 20px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        color: #fff;
+        background-color: #676EFF;
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 7px #9598ff;
+        box-shadow: 0 7px #9598ff;
+    }
+
+     .checkoutbtn:hover {background-color: #3741ff
+    }
+
+    .checkoutbtn:active {
+        background-color: #3741ff;
+        box-shadow: 0 5px #666;
+        transform: translateY(4px);
+    }
+    
+</style>    
 <html>
     <body>
     <?php print("<p style=color:red>".$_SESSION['error']."</p>");
@@ -13,7 +41,7 @@
         <input style="position: absolute; right: 100px; top: 155px; width: 510px; height: 30px;" placeholder = "E-mail" type="email" name="contactMail"><br><br>
         <textarea style="position: absolute; right: 100px; top: 190px; width: 510px; height: 150px;" placeholder = "  Bericht" type=Titel name="contactBericht"></textarea><br><br>
         <!--<button onclick="verstuurBericht()" class="btn btn-primary button" type="button" style="position: absolute; left: 1000px; top: 350px; width: 150px;">Verstuur</button>-->
-        <input type="submit" value="Verstuur" href="/nerdygadgets-main/get-contact.php" class="btn btn-primary checkoutbtn" style="position: absolute; right: 100px; top: 350px; width: 150px;"></a>
+        <input type="submit" value="Verstuur" href="/nerdygadgets-main/get-contact.php" style="position: absolute; right: 100px; top: 350px; width: 150px;" class="btn btn-primary checkoutbtn" ></a>
     </form>
     </body>
 </html>
