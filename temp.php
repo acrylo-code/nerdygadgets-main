@@ -23,3 +23,4 @@ if(isset($_GET['wachtwoord']) && $_GET['temp'] && isset($_GET['sensor'])){
         mysqli_stmt_execute($statement2);
     }
 }
+

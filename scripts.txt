@@ -48,6 +48,10 @@ CREATE TABLE IF NOT EXISTS `contactgevens` (
   PRIMARY KEY (`ContactID`)
 );
  
+
+-- Script om klantgegevens aan te passen
+ALTER TABLE klantgegevens ADD isAdmin BIT DEFAULT 0 NOT NULL;
+ALTER TABLE klantgegevens ADD Wachtwoord VARCHAR(255) NOT NULL;
  
 -- script om de img on de website te herstellen
 

@@ -60,7 +60,7 @@ $databaseConnection = connectToDatabase();
                     <img src="Public\ProductIMGHighRes\cart.png" alt="cart" width="40" height="32">
                 </i>
                 <li>⠀</a>
-                    <a href="/nerdygadgets-main/cart.php" class="HrefDecoration "><i aria-hidden="true">
+                    <a href="/nerdygadgets-main/login.php" class="HrefDecoration "><i aria-hidden="true">
                     <img src="Public\ProductIMGHighRes\login.png" alt="login" width="40" height="32">
                 </i>
                 <li>⠀</a>
