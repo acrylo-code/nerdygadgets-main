@@ -37,6 +37,18 @@ CREATE TABLE IF NOT EXISTS `bestellingen_rows` (
   CONSTRAINT `orderregels_ibfk_1` FOREIGN KEY (`OrderID`) REFERENCES `orders` (`OrderID`)
 );
 
+-- Create the table contactgevenst if it doesn't exist
+CREATE TABLE IF NOT EXISTS `contactgevens` (
+  `ContactID` int(11) NOT NULL AUTO_INCREMENT,
+  `Voornaam` varchar(255) NOT NULL,
+  `Achternaam` varchar(255),
+  `Email` varchar(255) NOT NULL,
+  `Bericht` varchar(500) NOT NULL,
+  `sendTime` varchar(25) NOT NULL,
+  PRIMARY KEY (`ContactID`)
+);
+ 
+ 
 -- script om de img on de website te herstellen
 
 INSERT INTO stockitemimages (StockItemID, ImagePath)
@@ -53,3 +65,35 @@ INSERT INTO stockitemimages (StockItemID, ImagePath)
 VALUES (222, 'Chocolate.jpg');
 INSERT INTO stockitemimages (StockItemID, ImagePath)
 VALUES (220, 'Chocolate.jpg');
+
+
+
+##python script voor de raspberry
+
+import sense_hat
+import time
+import requests
+
+# url doorgeven en hoelang er gewacht moet worden
+wacht = 3  # second
+url = "http://192.168.33.15:80/nerdygadgets-main/temp.php?sensor=5&wachtwoord=938285693256&temp="
+
+# afkorting voor sense_hat.SenseHat()
+sense = sense_hat.SenseHat()
+
+# aanmaken loop
+
+while True:
+
+    # meet de temperatuur
+    temp = str(round(sense.get_temperature(), 1))
+    
+    #post de temperatuur op de temp.php van de website
+    temp = url+temp
+    result = requests.get(temp)
+    print(result.text)
+    print("meting is verstuurd")
+
+    
+    # wacht 3 seconden
+    time.sleep(wacht)

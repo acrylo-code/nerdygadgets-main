@@ -13,7 +13,7 @@ foreach ($ColdroomTemp as $temp) {
     $gemTemp += $temp;
  }
 $gemTemp /= count($ColdroomTemp);
-$gemTemp = "<a class='StockItemName'>".$gemTemp."° </a>"
+$gemTemp = "<a class='StockItemName'>".$gemTemp."°C </a>"
 ?>
 <style>
     .button {
