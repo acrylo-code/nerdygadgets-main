@@ -16,36 +16,46 @@ include_once "header.php";
 $klantgegeven = [];
 
 $klantgegeven = [
-    "Voornaam" => $_POST['Voornaam'],
-    "Tussenvoegsel" => $_POST['Tussenvoegsel'],
-    "Achternaam" => $_POST['Achternaam'],
-    "Adres" => $_POST['Adres'],
-    "Postcode" => $_POST['Postcode'],
-    "Woonplaats" => $_POST['Woonplaats'],
+    "Voornaam" => strtolower($_POST['Voornaam']),
+    "Tussenvoegsel" => strtolower($_POST['Tussenvoegsel']),
+    "Achternaam" => strtolower($_POST['Achternaam']),
+    "Adres" => strtolower($_POST['Adres']),
+    "Postcode" => strtoupper($_POST['Postcode']),
+    "Woonplaats" => strtolower($_POST['Woonplaats']),
     "Telefoonnummer" => $_POST['Telefoonnummer'],
     "Email" => $_POST['Email'],
     "Huisnummer" => $_POST['Huisnummer']
 ];
 
-
 if(isset($_POST['Voornaam']) && isset($_POST['Achternaam']) && isset($_POST['Adres']) && isset($_POST['Postcode']) && isset($_POST['Woonplaats']) && isset($_POST['Telefoonnummer']) && isset($_POST['Email']) && isset($_POST['Huisnummer'])){
 // Test if string contains spaces
 // Test if string contains spaces or other characters
 if(!preg_match("/^[a-zA-Z]*$/",$_POST['Voornaam']) || !preg_match("/^[a-zA-Z]*$/",$_POST['Achternaam']) !== false 
-|| strpos($_POST['Postcode']," ") !== false || strpos($_POST['Email']," ") !== false){
+|| strpos($_POST['Postcode']," ") !== false || strpos($_POST['Email']," ") !== false ||  strlen($_POST['Postcode']) != 6){
   //goto order.php
-    $_SESSION['error'] = "Voornaam, Achternaam, Postcode en Email mogen geen spaties of andere karakters bevatten.";
+    $_SESSION['error'] = "Een veld is niet geldig.";
     header("Location: order.php");
 } else{
-    var_dump($row); 
-    placeOrder($klantgegeven);
-    var_dump($klantgegeven);
-    echo "<br>";
-    echo "Bestelling is geplaats<br><br>";
-    header("Location: https://bankieren.rabobank.nl/welcome/"); 
-    $cart = [];
-    saveCart($cart);
-}
+        $split_Postcode = str_split(strtoupper($_POST['Postcode']),4);
+        $split_Postcode[0] = (preg_match("/^[0-9]{4}$/",$split_Postcode[0]));
+        $split_Postcode[1] = (preg_match("/^[a-zA-Z]{2}$/",$split_Postcode[1]));
+        if ($split_Postcode[0] == 1 && $split_Postcode[1] == 1){
+            print "Postcode is geldig!!";
+            echo("<br>");
+            var_dump($row); 
+            echo("<br>");
+            placeOrder($klantgegeven);
+            var_dump($klantgegeven);
+            echo "<br>";
+            echo "Bestelling is geplaats<br><br>";
+            header("Location: https://bankieren.rabobank.nl/welcome/"); 
+            $cart = [];
+            saveCart($cart);
+    } else {
+        $_SESSION['error'] = "Een veld is niet geldig.";
+        header("Location: order.php");
+        }
+    }
 }
 
 function register($klantgegevens){

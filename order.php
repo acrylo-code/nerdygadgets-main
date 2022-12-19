@@ -64,7 +64,6 @@
                             <tr>   
                                 <th scope="col">Product</th>
                                 <th scope="col">Aantal</th>
-                                <th scope="col">Totaal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -80,8 +79,6 @@
                                         <!-- format the price as: €49,99 -->
                                         <td><?php echo ($product['quantityInCart']); ?></td>
                                         <!-- display total for that current item(s) -->
-                                        <td><?php echo '€' . number_format($product['SellPrice'] * $product['quantityInCart'], 2, ',', '.'); ?></td>
-                                        <!-- Totaal laten zien: -->
                                     </tr>
                                     <?php
                                 }

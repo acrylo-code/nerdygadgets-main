@@ -110,9 +110,14 @@
                     </table>    
                     <div class="row">
                         <div class="col-12" style="position: relative;">
-                            <h3 class="StockItemNameViewSize StockItemName">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
+                            <h3 style="position: absolute; bottom: 15px; right: 0;"class="StockItemName">Subtotaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
                             <!-- add a button to view cart -->
-                            <a href="/nerdygadgets-main/order.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: 15px; right: 0;">Afrekenen</a>
+                            <?php $totalPrice = $totalPrice*0.9 ?>
+                            <input style="position: absolute; bottom: -20px; right: 0; width: 210px; height: 30px;" placeholder = "Kortingscode" type=Titel name="kortingsCode  "><br><br>
+                            <h3 style="position: absolute; bottom: -65px; right: 0;"class="StockItemName">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
+                            <?php if($totalPrice >= 0){ ?>
+                            <a href="/nerdygadgets-main/order.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -110px; right: 0;">Afrekenen</a>
+                            <?php } ?>
                     </div>
         </div>
     </div>
