@@ -7,13 +7,14 @@ include __DIR__ . "/header.php";
 $StockItem = getStockItem($_GET['id'], connectToDatabase());
 $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase()); 
 $ColdroomTemp = getColdroomTemp(connectToDatabase());
+
 foreach ($ColdroomTemp as $temp) {
     $temp = $temp['Temperature'];
     //calc avarige temp
     $gemTemp += $temp;
  }
 $gemTemp /= count($ColdroomTemp);
-$gemTemp = "<a class='StockItemName'>".$gemTemp."°C </a>"
+$gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$ColdroomTemp[0]['RecordedWhen'].".";
 ?>
 <style>
     .button {
@@ -128,8 +129,6 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C </a>"
                 </div>
             </div>
         </div>
-        
-
         <div id="StockItemDescription">
             <h3>Artikel beschrijving</h3>
             <p><?php print $StockItem['SearchDetails']; ?></p>

@@ -98,7 +98,7 @@ function getStockItemImage($id, $databaseConnection) {
 
 function getColdroomTemp($databaseConnection) {
     $Query = "
-    SELECT Temperature
+    SELECT Temperature, RecordedWhen
     FROM coldroomtemperatures";
     $Statement = mysqli_prepare($databaseConnection, $Query);
     mysqli_stmt_execute($Statement);
