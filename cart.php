@@ -112,7 +112,8 @@
                         <div class="col-12" style="position: relative;">
                             <h3 style="position: absolute; bottom: 15px; right: 0;"class="StockItemName">Subtotaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
                             <!-- add a button to view cart -->
-                            <?php $totalPrice = $totalPrice*0.9 ?>
+                            <?php $totalPrice = $totalPrice*0.9 
+                            ## korting?>
                             <input style="position: absolute; bottom: -20px; right: 0; width: 210px; height: 30px;" placeholder = "Kortingscode" type=Titel name="kortingsCode  "><br><br>
                             <h3 style="position: absolute; bottom: -65px; right: 0;"class="StockItemName">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
                             <?php if($totalPrice >= 0){ ?>

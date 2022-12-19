@@ -71,6 +71,7 @@
                                 $totalPrice = 0;
                                 foreach(getCartItems() as $productId => $product){
                                     $totalPrice += $product['SellPrice'] * $product['quantityInCart'];
+                                    ## haal de korting eraf
                                     ?>
                                     <tr>
                                         <td>
