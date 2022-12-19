@@ -48,6 +48,17 @@ CREATE TABLE IF NOT EXISTS `contactgevens` (
   PRIMARY KEY (`ContactID`)
 );
  
+--een tabel met kortingsCodes
+CREATE TABLE IF NOT EXISTS `kortingsCodes` (
+  `CodeID` int(11) NOT NULL AUTO_INCREMENT,
+  `Code` varchar(255) NOT NULL,
+  `Type` varchar(255),
+  `Aantal` varchar(255) NOT NULL,
+  PRIMARY KEY (`CodeID`)
+);
+-- Nieuwe code aanmaken
+INSERT INTO kortingscodes (Aantal, Code, Type)
+VALUES (5, '5PROCENTKORTING', 'procent');
 
 -- Script om klantgegevens aan te passen
 ALTER TABLE klantgegevens ADD isAdmin BIT DEFAULT 0 NOT NULL;

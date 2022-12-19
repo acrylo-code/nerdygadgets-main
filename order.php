@@ -1,5 +1,4 @@
 <?php include __DIR__ . "/header.php"; ?>
-
 <?php
     if(isset($_GET['action'])){
         handleCartAction($_GET['action']);
@@ -147,7 +146,7 @@
                         </div>
                         <div class="mt-5 d-flex">
                             <div class="col-6" style="position: relative;">
-                            <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; left: 0;">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
+                            <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; left: 0;">Totaal: <?php echo '€' . number_format($_SESSION['totalPrice'], 2, ',', '.'); ?></h3>
                                 <input type="submit" value="Afrekenen" href="/nerdygadgets-main/order-functions.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: -300;">* zijn verplichte velden.</a>
                                 <!--<input type="button" value="Terug" href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 300;"></a> -->
                             </div>

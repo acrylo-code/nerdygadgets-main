@@ -40,17 +40,16 @@ if(!preg_match("/^[a-zA-Z]*$/",$_POST['Voornaam']) || !preg_match("/^[a-zA-Z]*$/
         $split_Postcode[0] = (preg_match("/^[0-9]{4}$/",$split_Postcode[0]));
         $split_Postcode[1] = (preg_match("/^[a-zA-Z]{2}$/",$split_Postcode[1]));
         if ($split_Postcode[0] == 1 && $split_Postcode[1] == 1){
-            print "Postcode is geldig!!";
-            echo("<br>");
-            var_dump($row); 
-            echo("<br>");
             placeOrder($klantgegeven);
-            var_dump($klantgegeven);
-            echo "<br>";
-            echo "Bestelling is geplaats<br><br>";
-            header("Location: https://bankieren.rabobank.nl/welcome/"); 
+            ?>
+            <script type="text/javascript">
+                alert("Uw bestelling is geplaatst!");
+                window.location = "https://bankieren.rabobank.nl/welcome/"
+            </script>
+            <?php
             $cart = [];
             saveCart($cart);
+            $_SESSION['totalPrice'] = 0;
     } else {
         $_SESSION['error'] = "Een veld is niet geldig.";
         header("Location: order.php");

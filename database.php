@@ -107,4 +107,20 @@ function getColdroomTemp($databaseConnection) {
     return $Coldroomtemp;
 }
 
+function selectDiscountCode($code, $databaseConnection) {
+
+    $Query = "
+                SELECT *
+                FROM kortingscodes
+                WHERE Code = ?";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "s", $code);
+    mysqli_stmt_execute($Statement);
+    $R = mysqli_stmt_get_result($Statement);
+    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+
+    return $R;
+}
+
 include "cart-functions.php";

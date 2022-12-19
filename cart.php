@@ -1,9 +1,11 @@
 <?php include __DIR__ . "/header.php"; ?>
+<?php include_once __DIR__ . "/cart_functions.php"; ?>
 
 <?php
     if(isset($_GET['action'])){
         handleCartAction($_GET['action']);
     }
+    $conn = connectToDatabase();
 ?>
 
 <style>
@@ -110,16 +112,45 @@
                     </table>    
                     <div class="row">
                         <div class="col-12" style="position: relative;">
-                            <h3 style="position: absolute; bottom: 15px; right: 0;"class="StockItemName">Subtotaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
+                            <h3 style="position: absolute; bottom: -25px; right: 0;"class="StockItemName">Subtotaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
                             <!-- add a button to view cart -->
-                            <?php $totalPrice = $totalPrice*0.9 
+                            <?php
+                            if (isset($_POST["Kortingscode"])) {
+                                $code = $_POST["Kortingscode"];
+                                if (isStringVulnerable($code)) {
+                                    echo "Kortingscode is niet geldig";
+                                } else {
+                                    $korting = selectDiscountCode($code, $conn);
+                                    if ($korting[0]['Type'] == "aantal") {
+                                        if ($korting[0]['Aantal'] > $totalPrice) {
+                                            echo "Kortingscode is niet geldig bij dit bedrag";
+                                        } else {
+                                            $totalPrice = $totalPrice - $korting[0]['Aantal'];
+                                        }
+                                    } elseif ($korting[0]['Type'] == "procent") {
+                                        if ($korting[0]['Aantal'] > 100) {
+                                            echo "Kortingscode is niet geldig";
+                                        } else {
+                                            $totalPrice = $totalPrice * ((100 - $korting[0]['Aantal']) / 100);
+                                        }
+                                    } else {
+                                        echo "Kortingscode is niet geldig";
+                                    }
+                                }
+                            } $_SESSION['totalPrice'] = $totalPrice;
                             ## korting?>
-                            <input style="position: absolute; bottom: -20px; right: 0; width: 210px; height: 30px;" placeholder = "Kortingscode" type=Titel name="kortingsCode  "><br><br>
-                            <h3 style="position: absolute; bottom: -65px; right: 0;"class="StockItemName">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
-                            <?php if($totalPrice >= 0){ ?>
-                            <a href="/nerdygadgets-main/order.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -110px; right: 0;">Afrekenen</a>
+                            <form action="/nerdygadgets-main/cart.php" method="post">
+                                <input style="position: absolute; bottom: -60px; right: 0; width: 210px; height: 30px;" placeholder = "Kortingscode" type=Titel name="Kortingscode">
+                            </form>
+                            <h3 style="position: absolute; bottom: -105px; right: 0;"class="StockItemName">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
+                            <?php if($totalPrice > 0){ ?>
+                            <a href="/nerdygadgets-main/order.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -140px; right: 0;">Afrekenen</a>
+                            <a style="position: absolute; bottom: -190px; right: 0; padding-left: 100px">⠀</a>
+                            <br><br>
                             <?php } ?>
                     </div>
+                 </div>
+            </div>                          
         </div>
     </div>
 </div>
