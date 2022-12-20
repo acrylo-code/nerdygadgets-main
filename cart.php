@@ -111,8 +111,9 @@
                         </tbody>
                     </table>    
                     <div class="row">
-                        <div class="col-12" style="position: relative;">
-                            <h3 style="position: absolute; bottom: -25px; right: 0;"class="StockItemName">Subtotaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
+                <div class="col-12" style="position: relative;">
+                <?php if($totalPrice > 0){ ?>
+                    <h3 style="position: absolute; bottom: 15px; right: 0;"class="StockItemName">Subtotaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
                             <!-- add a button to view cart -->
                             <?php
                             if (isset($_POST["Kortingscode"])) {
@@ -139,12 +140,14 @@
                                 }
                             } $_SESSION['totalPrice'] = $totalPrice;
                             ## korting?>
+                            
                             <form action="/nerdygadgets-main/cart.php" method="post">
-                                <input style="position: absolute; bottom: -60px; right: 0; width: 210px; height: 30px;" placeholder = "Kortingscode" type=Titel name="Kortingscode">
+                                <input style="position: absolute; bottom: -20px; right: 0; width: 170px; height: 30px;" placeholder = "Kortingscode" type=Titel name="Kortingscode"><br><br>
+                                <input type="submit" value="Activeer" href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; right: -90px; top: 75px; width: 80px; height: 40px;"></a>
                             </form>
-                            <h3 style="position: absolute; bottom: -105px; right: 0;"class="StockItemName">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
-                            <?php if($totalPrice > 0){ ?>
-                            <a href="/nerdygadgets-main/order.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -140px; right: 0;">Afrekenen</a>
+                            <h3 style="position: absolute; bottom: -65px; right: 0;"class="StockItemName">Totaal: <?php echo '€' . number_format($totalPrice, 2, ',','.'); ?></h3>
+                            
+                                <a href="/nerdygadgets-main/order.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -110px; right: 0;">Afrekenen</a>
                             <a style="position: absolute; bottom: -190px; right: 0; padding-left: 100px">⠀</a>
                             <br><br>
                             <?php } ?>
