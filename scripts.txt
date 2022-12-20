@@ -63,6 +63,21 @@ VALUES (5, '5PROCENTKORTING', 'procent');
 -- Script om klantgegevens aan te passen
 ALTER TABLE klantgegevens ADD isAdmin BIT DEFAULT 0 NOT NULL;
 ALTER TABLE klantgegevens ADD Wachtwoord VARCHAR(255) NOT NULL;
+
+-- script om de reviews tabel aan te maken
+
+CREATE TABLE IF NOT EXISTS `reviews` (
+  `ReviewID` int(11) NOT NULL AUTO_INCREMENT,
+  `StockItemID` int(11) NOT NULL,
+  `KlantID` int(11) NOT NULL,
+  `Review` varchar(255) NOT NULL,
+  `Rating` int(11) NOT NULL,
+    `Date` date NOT NULL,
+    `Title` varchar(255) NOT NULL,
+  PRIMARY KEY (`ReviewID`),
+  KEY `KlantID` (`KlantID`),
+  CONSTRAINT `reviews_ibfk_1` FOREIGN KEY (`KlantID`) REFERENCES `klantgegevens` (`KlantID`)
+);
  
 -- script om de img on de website te herstellen
 

@@ -40,7 +40,6 @@ if (!isStringVulnerable($_GET['search_string']) && isset($_GET['search_string'])
     $SearchString = $_GET['search_string'];
 } else {
     $SearchString = "%";
-    print "Dit is geen toegestaande zoekterm.";
 }
 if (isset($_GET['sort'])) {
     $SortOnPage = $_GET['sort'];

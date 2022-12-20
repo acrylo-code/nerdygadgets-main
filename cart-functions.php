@@ -182,3 +182,30 @@ function getTotalItemsInCart(){
     }
     return $totalItems;
 }
+
+// Voegt een error message toe aan het array met fouten.
+function addErrorMessage($errorMessage){
+    $_SESSION['errorMessages'][] = $errorMessage;
+}
+
+function clearErrorMessages(){
+    unset($_SESSION['errorMessages']);
+}
+
+// Geeft false terug als er geen foutmeldingen bekend zijn, een <ul> </ul> aan met list items (errors)
+// Laat wanneer je deze functie aanroept alle fouten op de pagina zien.
+// Want hij haalt automatisch de meldingen weg zodra ze "gezien" zijn.
+function getErrorMessages(){
+    $errorMessages = $_SESSION['errorMessages'] || false;
+
+    if($errorMessages !== false){
+        $html = "<ul class='errorMessages'>";
+        foreach($_SESSION['errorMessages'] as $errorMessage){
+            $html .= "<li class='errorMessage'>$errorMessage</li>";
+        }
+        $html .= "</ul>";
+        clearErrorMessages();
+        return $html;
+    }
+    return false;
+}

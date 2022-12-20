@@ -23,6 +23,8 @@ $databaseConnection = connectToDatabase();
 </head>
 <body>
 <div class="Background">
+<div class="row" id="Header">
+</div>
     <div class="row" id="Header">
         <div class="col-2"><a href="./" id="LogoA">
                 <div id="LogoImage"></div>
@@ -72,6 +74,10 @@ $databaseConnection = connectToDatabase();
                 </li>                
             </ul>
         </div>
+        <?php if ($_SESSION['totalPrice'] >= 100) {?>
+        <div id="KortingFrame"><h6>Gebruik "5EUROKORTING" bij meer dan 100 euro.</h6>
+        </div>
+        <?php } ?>
     </div>
     <div class="row" id="Content">
         <div class="col-12">

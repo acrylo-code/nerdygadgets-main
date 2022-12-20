@@ -126,7 +126,13 @@
                                         if ($korting[0]['Aantal'] > $totalPrice) {
                                             echo "Kortingscode is niet geldig bij dit bedrag";
                                         } else {
-                                            $totalPrice = $totalPrice - $korting[0]['Aantal'];
+                                            if ($totalPrice >= 100 && $korting[0]['Code'] == "5EUROKORTING") {
+                                                $totalPrice = $totalPrice - $korting[0]['Aantal'];
+                                            } elseif ($korting[0]['Code'] != "5EUROKORTING") {
+                                                $totalPrice = $totalPrice - $korting[0]['Aantal'];
+                                            } else {
+                                                echo "Kortingscode is niet geldig bij dit bedrag";
+                                            }
                                         }
                                     } elseif ($korting[0]['Type'] == "procent") {
                                         if ($korting[0]['Aantal'] > 100) {

@@ -1,8 +1,7 @@
-/* * {
+* {
     margin: 0;
     padding: 0;
-} */
-
+}
 
 .center {
     position: relative;
@@ -27,15 +26,40 @@
     content: "★";
 }
 .stars input:checked ~ label{
-    color: #676EFF;
+    color: #000345;
     text-shadow: 1px 1px white;
 }
 .stars:not(:checked) > label:hover,
 .stars:not(:checked) > label:hover ~ label {
-    color: #676EFF;
+    color: #000345;
 }
 .stars input:checked > label:hover,
 .stars input:checked > label:hover ~ label {
-    color: #676EFF;
+    color: #000345;
     text-shadow: 1px 1px blue;
+}
+
+.review-button {
+    position: relative;
+    top: 20%;
+    left: 72%;
+    border-radius: 12px;
+    background-color: #00078e;
+    color: white;
+}
+.Reviewtext {
+    font-family: 'Noto Sans KR', sans-serif;
+    position: relative;
+    top: 20%;
+    width: 100%;
+    text-align: left;
+    font-size: 30px;
+    font-weight: bold;
+    
+}
+.Reviewsubmit {
+    position: relative;
+    border-radius: 12px;
+    background-color: #00078e;
+    color: white;
 }
