@@ -35,10 +35,12 @@ if (isset($_GET['page_number'])) {
 // code deel 1 van User story: Zoeken producten
 // <voeg hier de code in waarin de zoekcriteria worden opgebouwd>
 
-$SearchString = "";
 
-if (isset($_GET['search_string'])) {
+if (!isStringVulnerable($_GET['search_string']) && isset($_GET['search_string'])) {
     $SearchString = $_GET['search_string'];
+} else {
+    $SearchString = "%";
+    print "Dit is geen toegestaande zoekterm.";
 }
 if (isset($_GET['sort'])) {
     $SortOnPage = $_GET['sort'];
@@ -75,10 +77,11 @@ switch ($SortOnPage) {
         $SortName = "price_low_high";
     }
 }
-$searchValues = explode(" ", $SearchString);
+
 
 $queryBuildResult = "";
 if ($SearchString != "" && !isStringVulnerable($SearchString)) {
+    $searchValues = explode(" ", $SearchString);
     for ($i = 0; $i < count($searchValues); $i++) {
         if ($i != 0) {
             $queryBuildResult .= "AND ";
@@ -92,7 +95,6 @@ if ($SearchString != "" && !isStringVulnerable($SearchString)) {
         $queryBuildResult .= "SI.StockItemID ='$SearchString'";
     }
 }
-
 
 // <einde van de code voor zoekcriteria>
 // einde code deel 1 van User story: Zoeken producten
