@@ -3,10 +3,10 @@ include __DIR__ . "/header.php";
 
  if(isset($_POST['email']) && isset($_POST['password'])){
 
-    login($_POST['email'], $_POST['password']);
+    $resultlogin = login($_POST['email'], $_POST['password']);
     
     if(isset($resultlogin)){
-        $_SESSION['user_id'] = $result['id'];
+        $_SESSION['KlantID'] = $resultlogin[0]['KlantID'];
         header('Location: index.php');
     } else {
         echo "Invalid email or password";
@@ -24,6 +24,7 @@ function login($email, $password){
     $result = mysqli_stmt_get_result($Statement);
     $resultlogin = mysqli_fetch_all($result, MYSQLI_ASSOC);
     var_dump($resultlogin);
+    return($resultlogin);
 }
 
 ?>

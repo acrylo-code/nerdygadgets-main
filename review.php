@@ -2,12 +2,14 @@
 include __DIR__ . "/header.php";
 
 $review = [
-    'StockItemID' => '1',
+    'StockItemID' => $_SESSION['ReviewProductID'],
     'Rating' => $_POST['rate'],
     'Review' => $_POST['ReviewText'],
-    'KlantID' => '1',
+    'KlantID' => $_SESSION['KlantID'],
     'Title' => $_POST['title']
 ];
+
+$_SESSION['ReviewProductID'] = null;
 
 // toevogen check voor de ID's
 if (isset($_POST['rate']) && isset($_POST['ReviewText']) && isset($_POST['title'])) {
@@ -32,7 +34,6 @@ function addReview($review){
     // Voer de query uit
     mysqli_stmt_execute($statement);
 }
-
 
 ?>
 <div id="SubContent">

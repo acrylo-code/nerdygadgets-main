@@ -1,20 +1,35 @@
 <?php
-include __DIR__ . "/headerminimal.php";
+include __DIR__ . "/header.php";
 include __DIR__ . "/user-functions.php";
 
 if(isLoggedIn()){
-    
+    print("You're logged in");
 } else{
-    header('Location: http://127.0.0.1:8080/nerdygadgets-main/login.php');
+    header('Location: /nerdygadgets-main/login.php');
 }
 ?>
 
 <!DOCTYPE html>
 <html>
+<link rel="stylesheet" href="/nerdygadgets-main/Public/CSS/review.css">
+<link rel="stylesheet" href="/nerdygadgets-main/Public/CSS/style.css">
 <head>
-    <link>
-<title>Myorders</title>
+<title>Mijn bestellingen</title>
 </head>
+<script> 
+  document.addEventListener("DOMContentLoaded", function() {
+  // Get references to the review button and form
+  var reviewButton = document.getElementById("review-button");
+  var reviewForm = document.getElementById("review-form");
+
+  // Add a click event listener to the review button
+  reviewButton.addEventListener("click", function() {
+    // Show the review form
+    reviewForm.style.display = "block";
+  });
+});
+0
+</script>
 <body>
 <h1>Mijn bestellingen</h1>
 
@@ -50,25 +65,30 @@ function myorderss(){
         $orderid = $login['OrderId'];
         $orderdatum = $login['OrderDatum'];
         $prijs = $login['Prijs'];
+        $productID = $login['ProductID'];
 ?>
 
-        <div class="orderbox">
-            <?php print("<h3>$productNaam</h3>");?>
-            <?php print("<p>" . "Bestelnummer: ". "$orderid" . " </p>");?>
-            <?php print("<p>" . "Besteldatum: " . "$orderdatum". "</p>");?>
-            
+        <div class="orderbox col-12" style="left: 7%">
+      <?php print("<h3>$productNaam</h3>");
+            print("<p>" . "Bestelnummer: ". "$orderid" . " </p>");
+            print("<p>" . "Besteldatum: " . "$orderdatum". "</p>");?>   
         <div class="prijs">
         <?php
             print("<h3>" . "€" . "$prijs" . "</h3>");
         ?>
-
-    </div>
-        <img style="max-width: 100px;" src="/nerdygadgets-main/Public/StockItemIMG/<?php echo $image ?>" alt="">
-    </div>
+        </div>
+        <div style="padding : 10px">
+        <a href="/nerdygadgets-main/view.php?id=<?php echo($productID);?>&LeaveReview=true" class="btn btn-primary btn_nerdy">Schrijf een review</a>
+        </div>
+        </div>
+        <div>
+            <img style="max-width: 100px;" src="/nerdygadgets-main/Public/StockItemIMG/<?php echo $image ?>" alt="">
+        </div>
         <?php
     }
     return($resultlogin);
 }
+
 $result = myorderss();
 
     function checkproducts($ProductID) {
@@ -89,43 +109,5 @@ $result = myorderss();
 
 ?>
 </div>
-
-
-
 </body>
 </html>
-<button id="review-button" class="review-button" type="button">Wil je een review over dit product achterlaten? </button>
-
-
-    <div id="review-form" style="display: none;">
-            <div class="Reviewtext"> Laat hier een review achter:
-                </div>
-            <form method="post" action="review.php">
-                <div class="form-group">
-                <input type="text" class="form-control" id="title" name="title" placeholder="Titel van uw review" required>
-            <h3>Hoe zou u ons product beoordelen?</h3>
-            <div class="center" >
-                    <div class="stars">
-                        <input type="radio" id="five" name="rate" value="5" />
-                        <label for="five"></label>
-                        <input type="radio" id="four" name="rate" value="4" />
-                        <label for="four"></label>
-                        <input type="radio" id="three" name="rate" value="3" />
-                        <label for="three"></label>
-                        <input type="radio" id="two" name="rate" value="2" />
-                        <label for="two"></label>
-                        <input type="radio" id="one" name="rate" value="1" required/>
-                        <label for="one"></label>
-                    </div>
-                </div>
-                <h3> Motiveer uw beoordeling:</h3>
-                <div class="form-group">
-                    <textarea class="form-control" id="ReviewText" name="ReviewText" rows="4" required ></textarea>
-                </div>
-                
-                    <input type="submit" class="Reviewsubmit" value="Verstuur">
-            
-            </form>
-        </div>
-    </div>
-

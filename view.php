@@ -1,6 +1,7 @@
 <!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
 include __DIR__ . "/header.php";
+include __DIR__ . "/user-functions.php";
 ?>
 <link rel="stylesheet" href="/nerdygadgets-main/Public/CSS/review.css">
 <?php
@@ -169,15 +170,18 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
                 <p><?php print $StockItem['CustomFields']; ?>.</p>
                 <?php
             }
+
+
+            if (isLoggedIn() && $_GET['LeaveReview'] == 'true') {
+                $_SESSION['ReviewProductID'] = $_GET['id']
             ?>
         </div>
         <div id="ReviewDescription">
-            <p>Laat hier een review achter:</p>
-            
-            <div class="form-group">
-                <input type="text" class="form-control" id="title" name="title" placeholder="Titel van uw review">
-            <h3>Hoe zou u ons product beoordelen?</h3>
-            <div class="center">
+    <div class="Reviewtext"> 
+                <h3>Laat hier een review achter:</h3> 
+    </div>
+                <form method="post" action="review.php">
+                <div class="center" >
                     <div class="stars">
                         <input type="radio" id="five" name="rate" value="5" />
                         <label for="five"></label>
@@ -187,21 +191,22 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
                         <label for="three"></label>
                         <input type="radio" id="two" name="rate" value="2" />
                         <label for="two"></label>
-                        <input type="radio" id="one" name="rate" value="1" />
+                        <input type="radio" id="one" name="rate" value="1" required/>
                         <label for="one"></label>
                     </div>
                 </div>
-                <h3> Motiveer uw beoordeling:</h3>
                 <div class="form-group">
-                    <textarea class="form-control" id="ReviewText" name="ReviewText" rows="4" ></textarea>
+                <input type="text" class="form-control" id="title" name="title" placeholder="Titel van uw review" required>
+                
+                <div class="form-group">
+                    <textarea class="form-control" id="ReviewText" name="ReviewText" rows="4" placeholder="Motiveer uw beoordeling" required ></textarea>
                 </div>
-                    <a href="/nerdygadgets-main/review.php">
-                        <button class="btn btn-primary button" type="button">Verstuur</button>
-                    </a>
-            
+                
+                    <button type="submit" class="btn btn-primary">Verstuur</button>
             </form>
         </div>
         <?php
+    }
     } else {
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
