@@ -139,4 +139,19 @@ function selectReviews($ProductID) {
     return $R;
 }
 
+function selectPostedReviews($ProductID, $KlantID) {
+    $conn = connectToDatabase();
+    $Query = "
+        SELECT *
+        FROM reviews
+        WHERE StockItemID = '".$ProductID."' AND KlantID = '".$KlantID."'";
+    $Statement = mysqli_prepare($conn, $Query);
+    mysqli_stmt_execute($Statement);
+    $R = mysqli_stmt_get_result($Statement);
+    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+
+    return $R;
+
+}
+
 include "cart-functions.php";

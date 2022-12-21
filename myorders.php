@@ -3,7 +3,8 @@ include __DIR__ . "/header.php";
 include __DIR__ . "/user-functions.php";
 
 if(isLoggedIn()){
-    print("You're logged in");
+    $KlandID = $_SESSION['KlantID'];
+    myorderss($KlandID);
 } else{
     header('Location: /nerdygadgets-main/login.php');
 }
@@ -16,42 +17,17 @@ if(isLoggedIn()){
 <head>
 <title>Mijn bestellingen</title>
 </head>
-<script> 
-  document.addEventListener("DOMContentLoaded", function() {
-  // Get references to the review button and form
-  var reviewButton = document.getElementById("review-button");
-  var reviewForm = document.getElementById("review-form");
-
-  // Add a click event listener to the review button
-  reviewButton.addEventListener("click", function() {
-    // Show the review form
-    reviewForm.style.display = "block";
-  });
-});
-0
-</script>
 <body>
-<h1>Mijn bestellingen</h1>
-
-<form method="GET"> 
-<input type="text" name="id" id="devidd" required>
-<input type="submit" value="devidinlog">
-
-</form> 
-
 
 <?php
-
-
-function myorderss(){
-    $devid = $_GET['id'];   
+function myorderss($KlandID){ 
     $conn = connectToDatabase();
     $query4 = "
     SELECT 
     bestellingen_rows.ProductID, bestellingen_rows.Prijs, bestellingen_rows.Aantal, 
     bestellingen_rows.OrderID, bestellingen.OrderDatum, bestellingen.OrderTotaal, bestellingen_rows.OrderRegelID, bestellingen.Betaald FROM bestellingen
     JOIN bestellingen_rows ON bestellingen_rows.OrderRegelID = bestellingen.OrderID 
-    WHERE bestellingen.KlantID = '".$devid."'  ";
+    WHERE bestellingen.KlantID = '".$KlandID."'  ";
 
     $Statement = mysqli_prepare($conn, $query4);
     mysqli_stmt_execute($Statement);
@@ -78,7 +54,15 @@ function myorderss(){
         ?>
         </div>
         <div style="padding : 10px">
+        <?php 
+        $reviews = selectPostedReviews($productID, $KlandID);
+        if(isset($reviews[0]['ReviewID'])){
+            print("<p>" . "U heeft al een review geschreven over dit product" . "</p>");
+        } else {
+        
+        ?>
         <a href="/nerdygadgets-main/view.php?id=<?php echo($productID);?>&LeaveReview=true" class="btn btn-primary btn_nerdy">Schrijf een review</a>
+        <?php }?>
         </div>
         </div>
         <div>
@@ -89,7 +73,7 @@ function myorderss(){
     return($resultlogin);
 }
 
-$result = myorderss();
+$result = myorderss($KlandID);
 
     function checkproducts($ProductID) {
         $conn = connectToDatabase();

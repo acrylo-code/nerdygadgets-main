@@ -14,6 +14,7 @@ include_once "header.php";
 //     "Huisnummer" => "1" 
 // ];
 $klantgegeven = [];
+$KlantID = $_SESSION['KlantID'];
 
 $klantgegeven = [
     "Voornaam" => strtolower($_POST['Voornaam']),
@@ -40,11 +41,11 @@ if(!preg_match("/^[a-zA-Z]*$/",$_POST['Voornaam']) || !preg_match("/^[a-zA-Z]*$/
         $split_Postcode[0] = (preg_match("/^[0-9]{4}$/",$split_Postcode[0]));
         $split_Postcode[1] = (preg_match("/^[a-zA-Z]{2}$/",$split_Postcode[1]));
         if ($split_Postcode[0] == 1 && $split_Postcode[1] == 1){
-            placeOrder($klantgegeven);
+            placeOrder($klantgegeven, $KlantID);
             ?>
             <script type="text/javascript">
                 alert("Uw bestelling is geplaatst!");
-                window.location = "https://bankieren.rabobank.nl/welcome/"
+                //window.location = "https://bankieren.rabobank.nl/welcome/"
             </script>
             <?php
             $cart = [];
@@ -72,9 +73,9 @@ function register($klantgegevens){
     // Voer de query uit
     mysqli_stmt_execute($statement);
     // Haal het laatst toegevoegde KlantID op
-    $klantID = mysqli_insert_id($conn);
+    $KlantID = mysqli_insert_id($conn);
     print (mysqli_insert_id($conn));
-    $_SESSION['klantId'] = $klantID;
+    $_SESSION['KlantID'] = $KlantID;
 }
 
 // Voorbeeld van een row waar de functie mee werkt, deze functie gebruik je in de addOrder functie.
@@ -84,22 +85,27 @@ function register($klantgegevens){
 //     "Aantal" => 0,
 //     "Prijs" => 0,
 // ];
-function addOrderRow($row){
+function addOrderRow($OrderID, $StockItemID, $Aantal, $Prijs){
     // Haal de database connectie op
     $conn = connectToDatabase();
     // Maak een query voor het toevoegen aan het tabel "orderregels" maak gebruik van mysqli_stmt
     $query = "INSERT INTO bestellingen_rows (OrderID, ProductID, Aantal, Prijs) VALUES (?, ?, ?, ?)";
     $statement = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($statement, "iiii", 
-        $row["OrderID"], 
-        $row["ProductId"], 
-        $row["Aantal"], 
-        $row["Prijs"]);
+        $OrderID, 
+        $StockItemID, 
+        $Aantal, 
+        $Prijs);
     // Voer de query uit
     mysqli_stmt_execute($statement);
+    print('OrderRow function'."<br>");
+    print($OrderID."<br>");
+    print($StockItemID."<br>");
+    print($Aantal."<br>");
+    print($Prijs."<br>");
 }
 
-function addOrder($userId){
+function addOrder($KlantID){
     // get current cart
     $cartItems = getCartItems();
     $cart = getCart();
@@ -111,7 +117,7 @@ function addOrder($userId){
     $query = "INSERT INTO bestellingen (KlantID, OrderDatum) VALUES (?, ?)";
     $statement = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($statement, "is", 
-        $userId, 
+        $KlantID, 
         $currentDate);
     // Voer de query uit
     mysqli_stmt_execute($statement);
@@ -120,39 +126,38 @@ function addOrder($userId){
     
     // Voeg elke orderregel toe van de bestelling
     foreach($cartItems as $cartItem){
-        $orderRow = [
-            "OrderID" =>  $orderId,
-            "ProductId" => $cartItem["StockItemID"],
-            "Aantal" => $cartItem["quantityInCart"],
-            "Prijs" => $cartItem["SellPrice"],
-        ];
-        addOrderRow($orderRow);
+        // $orderRow = [
+        //     "OrderID" =>  $orderId,
+        //     $ProductId = $cartItem["StockItemID"],
+        //     "Aantal" => $cartItem["quantityInCart"],
+        //     "Prijs" => $cartItem["SellPrice"],
+        // ];
+        addOrderRow($orderId, $cartItem["StockItemID"], $cartItem["quantityInCart"], $cartItem["SellPrice"]);
     }
 }
 
 
 
 // Voert alle helper functies uit om een bestelling te plaatsen
-function placeOrder($klantgegevens){
+function placeOrder($klantgegevens, $KlantID){
     // Haal de database connectie op
     $conn = connectToDatabase();
     // Haal de huidige datum op
     $currentDate = date("Y-m-d H:i:s");
     // Haal de huidige gebruiker op
-    $userId = $_SESSION['klantId'];
     
     // Gebruik de opgeslagen UserID om de bestelling te plaatsen
-    if(isset($userId)){
-        addOrder($userId);
+    if(isset($KlantID)){
+        addOrder($KlantID);
     } else{
         //Gebruik $klantgegevens om een nieuwe bestelling te plaatsen voor een klant
         if(cartContainsItems()){
             // Registreer de gebruiker met de gegevens uit $klantgegevens
             register($klantgegevens);
             // Haal de UserID op van de net geregistreerde gebruiker en zet deze vast in de sessie.
-            $userId = $_SESSION['klantId'];
+            $KlantID = $_SESSION['KlantID'];
             // Plaats de bestelling
-            addOrder($userId);
+            addOrder($KlantID);
         }
     }
 }
@@ -174,10 +179,10 @@ function getOrders(){
     // Haal de database connectie op
     $conn = connectToDatabase();
     // Haal de huidige gebruiker op
-    $userId = $_SESSION['klantId'];
+    $KlantID = $_SESSION['KlantID'];
     // Maak een query voor het ophalen van alle bestellingen van de huidige gebruiker
-    if(isset($userId)){
-        $query = "SELECT * FROM bestellingen WHERE KlantID = $userId";
+    if(isset($KlantID)){
+        $query = "SELECT * FROM bestellingen WHERE KlantID = $KlantID";
         // Voer de query uit
         $result = mysqli_query($conn, $query);
         // Haal alle resultaten op

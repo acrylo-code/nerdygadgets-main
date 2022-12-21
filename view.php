@@ -173,11 +173,13 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
             }
             ?>
         </div>
+        <?php   $reviews = selectReviews($StockItem['StockItemID']);
+            if (isset($reviews[0])) { ?>
         <div id="ReviewFrame">
             <h3 class="StockItemID">Reviews</h3>
         <table>
             <?php
-            $reviews = selectReviews($StockItem['StockItemID']);
+            
             $review = $reviews[rand(0, count($reviews) - 1)];
                 print("Titel : <a class='StockItemID'>". $review['Title']."</a> <br>");
                 switch ($review['Rating']) {
@@ -199,7 +201,7 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
                 };
                 print("De review : <a class='StockItemID'>".$review['Review']."</a> <br>");
                 print("Datum : <a class='StockItemID'>".$review['Date']."</a> <br>");
-            
+            }
 
             if (isLoggedIn() && $_GET['LeaveReview'] == 'true') {
                 $_SESSION['ReviewProductID'] = $_GET['id']

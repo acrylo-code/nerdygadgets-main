@@ -85,7 +85,8 @@
                             ?>
                         </tbody>
                     </table>
-          <form method="post" action="/nerdygadgets-main/order-functions.php">
+                    <?php    if(isset($_SESSION['KlantID']) == false){ print('Je bent ingelogged!');}?>
+            <form method="post" action="/nerdygadgets-main/order-functions.php">
             <div class="row">
                 <div class="col-md-5">
                     <div class="orderpage__heading">
