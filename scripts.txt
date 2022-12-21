@@ -60,6 +60,9 @@ CREATE TABLE IF NOT EXISTS `kortingsCodes` (
 INSERT INTO kortingscodes (Aantal, Code, Type)
 VALUES (5, '5PROCENTKORTING', 'procent');
 
+INSERT INTO kortingscodes (Aantal, Code, Type)
+VALUES (5, '5EUROKORTING', 'aantal');
+
 -- Script om klantgegevens aan te passen
 ALTER TABLE klantgegevens ADD isAdmin BIT DEFAULT 0 NOT NULL;
 ALTER TABLE klantgegevens ADD Wachtwoord VARCHAR(255) NOT NULL;

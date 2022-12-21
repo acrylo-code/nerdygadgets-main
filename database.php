@@ -123,4 +123,20 @@ function selectDiscountCode($code, $databaseConnection) {
     return $R;
 }
 
+function selectReviews($ProductID) {
+    $conn = connectToDatabase();
+    $Query = "
+        SELECT *
+        FROM reviews
+        WHERE StockItemID = ?";
+
+    $Statement = mysqli_prepare($conn, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $ProductID);
+    mysqli_stmt_execute($Statement);
+    $R = mysqli_stmt_get_result($Statement);
+    $R = mysqli_fetch_all($R, MYSQLI_ASSOC);
+
+    return $R;
+}
+
 include "cart-functions.php";

@@ -26,17 +26,17 @@
     content: "★";
 }
 .stars input:checked ~ label{
-    color: #000345;
-    text-shadow: 1px 1px white;
+    color: #676EFF;
+    text-shadow:6px 6px rgba(7, 0, 57, 0.526);
 }
 .stars:not(:checked) > label:hover,
 .stars:not(:checked) > label:hover ~ label {
-    color: #000345;
+    color: #676EFF;
 }
 .stars input:checked > label:hover,
 .stars input:checked > label:hover ~ label {
-    color: #000345;
-    text-shadow: 1px 1px blue;
+    color: #676EFF;
+    text-shadow:6px 6px rgba(7, 0, 57, 0.526);
 }
 
 .review-button {

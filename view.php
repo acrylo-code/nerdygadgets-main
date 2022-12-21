@@ -162,6 +162,7 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
                             ?>
                             
                         </td>
+                        <td>
                     </tr>
                 <?php } ?>
                 </table><?php
@@ -170,11 +171,41 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
                 <p><?php print $StockItem['CustomFields']; ?>.</p>
                 <?php
             }
-
+            ?>
+        </div>
+        <div id="ReviewFrame">
+            <h3 class="StockItemID">Reviews</h3>
+        <table>
+            <?php
+            $reviews = selectReviews($StockItem['StockItemID']);
+            $review = $reviews[rand(0, count($reviews) - 1)];
+                print("Titel : <a class='StockItemID'>". $review['Title']."</a> <br>");
+                switch ($review['Rating']) {
+                    case '5':
+                        print("Aantal sterren : <a class=' stars'> ★★★★★ </a> <br>");
+                        break;
+                    case '4':
+                        print("Aantal sterren : <a class=' stars'> ★★★★ </a> <br>");
+                        break;
+                    case '3':
+                        print("Aantal sterren : <a class=' stars'> ★★★ </a> <br>");
+                        break;
+                    case '2' :
+                         print("Aantal sterren : <a class=' stars'> ★★ </a> <br>");
+                        break;
+                    case '1':
+                        print("Aantal sterren : <a class=' stars'> ★ </a> <br>");
+                        break;      
+                };
+                print("De review : <a class='StockItemID'>".$review['Review']."</a> <br>");
+                print("Datum : <a class='StockItemID'>".$review['Date']."</a> <br>");
+            
 
             if (isLoggedIn() && $_GET['LeaveReview'] == 'true') {
                 $_SESSION['ReviewProductID'] = $_GET['id']
-            ?>
+                ?>
+        </table>
+        
         </div>
         <div id="ReviewDescription">
     <div class="Reviewtext"> 
@@ -201,8 +232,7 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
                 <div class="form-group">
                     <textarea class="form-control" id="ReviewText" name="ReviewText" rows="4" placeholder="Motiveer uw beoordeling" required ></textarea>
                 </div>
-                
-                    <button type="submit" class="btn btn-primary">Verstuur</button>
+                    <button type="submit" class="btn btn-primary button">Verstuur</button>
             </form>
         </div>
         <?php
