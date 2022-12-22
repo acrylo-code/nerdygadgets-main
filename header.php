@@ -2,6 +2,8 @@
 error_reporting(E_ERROR | E_PARSE);
 session_start();
 include "database.php";
+include_once "product-functions.php";
+include_once "cart-functions.php";
 $databaseConnection = connectToDatabase();
 ?>
 <!DOCTYPE html>

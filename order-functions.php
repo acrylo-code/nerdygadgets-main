@@ -45,7 +45,7 @@ if(!preg_match("/^[a-zA-Z]*$/",$_POST['Voornaam']) || !preg_match("/^[a-zA-Z]*$/
             ?>
             <script type="text/javascript">
                 alert("Uw bestelling is geplaatst!");
-                //window.location = "https://bankieren.rabobank.nl/welcome/"
+                window.location = "https://bankieren.rabobank.nl/welcome/"
             </script>
             <?php
             $cart = [];
@@ -98,11 +98,6 @@ function addOrderRow($OrderID, $StockItemID, $Aantal, $Prijs){
         $Prijs);
     // Voer de query uit
     mysqli_stmt_execute($statement);
-    print('OrderRow function'."<br>");
-    print($OrderID."<br>");
-    print($StockItemID."<br>");
-    print($Aantal."<br>");
-    print($Prijs."<br>");
 }
 
 function addOrder($KlantID){

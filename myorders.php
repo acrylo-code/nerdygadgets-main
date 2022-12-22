@@ -23,9 +23,7 @@ if(isLoggedIn()){
 function myorderss($KlandID){ 
     $conn = connectToDatabase();
     $query4 = "
-    SELECT 
-    bestellingen_rows.ProductID, bestellingen_rows.Prijs, bestellingen_rows.Aantal, 
-    bestellingen_rows.OrderID, bestellingen.OrderDatum, bestellingen.OrderTotaal, bestellingen_rows.OrderRegelID, bestellingen.Betaald FROM bestellingen
+    SELECT * FROM bestellingen
     JOIN bestellingen_rows ON bestellingen_rows.OrderRegelID = bestellingen.OrderID 
     WHERE bestellingen.KlantID = '".$KlandID."'  ";
 
@@ -36,18 +34,27 @@ function myorderss($KlandID){
 
     foreach ($resultlogin as $key => $login) 
     {
-        $productNaam = $login['StockItemName'];
-        $image = $login['ImagePath'];
-        $orderid = $login['OrderId'];
+        $orderid = $login['OrderID'];
         $orderdatum = $login['OrderDatum'];
         $prijs = $login['Prijs'];
         $productID = $login['ProductID'];
+        $product = checkproducts($login['ProductID']);
+        $productNaam = $product[0]['StockItemName'];
+        $image = $product[0]['ImagePath'];
+        $searchDetails = $product[0]['SearchDetails'];
+        // var_dump($login);
+        print("<br>");
+        var_dump($product);
 ?>
 
         <div class="orderbox col-12" style="left: 7%">
-      <?php print("<h3>$productNaam</h3>");
-            print("<p>" . "Bestelnummer: ". "$orderid" . " </p>");
-            print("<p>" . "Besteldatum: " . "$orderdatum". "</p>");?>   
+      <?php print("<h3>".$productNaam."</h3>");
+            print("<p>" . "Bestelnummer: ".$orderid." </p>");
+            print("<p>" . "Besteldatum: ".$orderdatum."</p>");
+            print("<p>" . "Beschrijving : ".$searchDetails."</p>");?>   
+        <div>
+            <img style="max-width: 100px;" src="/nerdygadgets-main/Public/StockItemIMG/<?php echo $image ?>" alt="">
+        </div>
         <div class="prijs">
         <?php
             print("<h3>" . "€" . "$prijs" . "</h3>");
@@ -65,9 +72,6 @@ function myorderss($KlandID){
         <?php }?>
         </div>
         </div>
-        <div>
-            <img style="max-width: 100px;" src="/nerdygadgets-main/Public/StockItemIMG/<?php echo $image ?>" alt="">
-        </div>
         <?php
     }
     return($resultlogin);
@@ -75,21 +79,19 @@ function myorderss($KlandID){
 
 $result = myorderss($KlandID);
 
-    function checkproducts($ProductID) {
-        $conn = connectToDatabase();
-        $query = "
-        SELECT stockitems.StockItemName, ImagePath FROM stockitems
-        LEFT JOIN stockitemimages ON stockitemimages.StockItemId = stockitems.StockItemId
-        WHERE stockitems.StockItemID = '".$ProductID."' LIMIT 1;
-        ";
-
-        $StatementY = mysqli_prepare($conn, $query);
-        mysqli_stmt_execute($StatementY);
-        $resultY = mysqli_stmt_get_result($StatementY);
-        $resultXY = mysqli_fetch_all($resultY, MYSQLI_ASSOC);
-        $resultXY = $resultXY[0];
-        return($resultXY);
-    }
+function checkproducts($ProductID) {
+    $conn = connectToDatabase();
+    $query = "
+    SELECT StockItemName, ImagePath, SearchDetails
+    FROM stockitems S
+    LEFT join stockitemimages I ON S.StockItemID = I.StockItemID
+    WHERE S.StockItemID = '".$ProductID."'";
+    $Statement = mysqli_prepare($conn, $query);
+    mysqli_stmt_execute($Statement);
+    $result = mysqli_stmt_get_result($Statement);
+    $result = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return($result);
+}
 
 ?>
 </div>
