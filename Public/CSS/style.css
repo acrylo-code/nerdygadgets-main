@@ -689,3 +689,102 @@ ul#ul-class-price li {
     box-shadow: 0 5px #666;
     transform: translateY(4px);
 }
+.loginForm {
+    position: relative;
+    left: 390px;
+    width: 670px;
+    height: 400px;
+    background-color: #676EFF;
+    margin-top: 15px;
+    border-radius: 12px;
+    padding: 20px;
+    border: 3px solid #000000;
+    font-weight: bold;
+    font-size: 20px;
+}
+.register {
+    position: relative;
+    left: 525px;
+    top: -100px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px;
+    text-align: center;
+    
+}    
+.logininput {
+    position: relative;
+    color: rgb(0, 0, 0);
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px;
+    background-color: #98d2ff;
+    border: 3px solid #000000;
+}
+.loginsubmit {
+    position: relative;
+    top: 5px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px;
+    background-color: #4a53ff;
+    border: 3px solid #000000;
+}
+.logintext {
+    position: relative;
+    left: 235px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: bold;
+}
+.logintext2 {
+    position: relative;
+    left: 250px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: bold;
+}
+.inputboxregister {
+    position: relative;
+    width: 750px;
+    left: 320px;
+    margin-top: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px;
+    text-align: center;
+    background-color: #676EFF;
+    border: 3px solid #000000;
+    padding: 50px;
+}
+.registerTitle {
+    position: relative;
+    top: -20px;
+    color: #000;
+    font-size: 30px;
+}
+.registerbox {
+    position: relative;
+    background-color: #98d2ff;
+    border-radius: 12px;
+    padding: 5px;
+    border: 3px solid #000000;
+    font-weight: bold;
+    font-size: 20px;
+}
+.registersubmit {
+    position: relative;
+    top: 45px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 12px;
+    background-color: #4a53ff;
+    border: 3px solid #000000;
+}
+.registerbox:hover {
+    background-color: #4a53ff;
+}

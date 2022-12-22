@@ -27,21 +27,20 @@ function login($email, $password){
     mysqli_stmt_execute($Statement);
     $result = mysqli_stmt_get_result($Statement);
     $resultlogin = mysqli_fetch_all($result, MYSQLI_ASSOC);
-    var_dump($resultlogin);
     return($resultlogin);
 }
 
 ?>
-
+<div class="loginForm">
 <form action="login.php" method="post">
-    <label for="username">Gebruikersnaam</label>
-    <input type="text" name="email" id="email" required>
-    <label for="password">Wachtwoord</label>
-    <input type="password" name="password" id="password" required>
-    <input type="submit" value="Login">
+    <label class="logintext"  for="username">Gebruikersnaam</label>
+    <input class="logininput" type="text" name="email" id="email" required>
+    <label class="logintext2" for="password">Wachtwoord</label>
+    <input class="logininput" type="password" name="password" id="password" required>
+    <input class="loginsubmit" type="submit" value="Inloggen">
 </form>
-
-<a href="register.php"> You can register here</a>
+</div>
+<a href="/nerdygadgets-main/register.php" class="register">Geen account? Maak hier een account aan.</a>
 
 
 <?php
