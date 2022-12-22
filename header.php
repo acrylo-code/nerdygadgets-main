@@ -5,7 +5,18 @@ include "database.php";
 include_once "product-functions.php";
 include_once "cart-functions.php";
 $databaseConnection = connectToDatabase();
+
+
+function logout(){
+    $_SESSION['KlantID'] = 0;
+}
+
+if($_GET['logout'] == 1){
+    logout();
+    header("Location: index.php");
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,7 +72,7 @@ $databaseConnection = connectToDatabase();
             <ul id="ul-class-navigation">
                 <liv>
                     <?php if (isset($_SESSION['KlantID'])) { ?>
-                    <form method="post">
+                    <form method="post" action="header.php?logout=1">
                         <button type="submit" name="uitloggen">Uitloggen</button>
                     </form>
                     <?php } ?>
