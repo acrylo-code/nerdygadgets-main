@@ -59,13 +59,24 @@ $databaseConnection = connectToDatabase();
         </div>
         <div class='navigation_bar'>
             <ul id="ul-class-navigation">
+                <liv>
+                    <?php if (isset($_SESSION['KlantID'])) { ?>
+                    <form method="post">
+                        <button type="submit" name="uitloggen">Uitloggen</button>
+                    </form>
+                    <?php } ?>
+                </liv>
                 <li>
                     <a href="/nerdygadgets-main/cart.php" class="HrefDecoration "><i aria-hidden="true">
                     <img src="Public\ProductIMGHighRes\cart.png" alt="cart" width="40" height="32">
                 </i>
-                <li>⠀</a>
+                <li>⠀</a> <?php if(isset($_SESSION['KlantID'])) {?>
+                    <a href="/nerdygadgets-main/myorders.php" class="HrefDecoration "><i aria-hidden="true">
+                    <img src="Public\ProductIMGHighRes\login.png" alt="login" width="40" height="32">
+                    <?php } else {?>
                     <a href="/nerdygadgets-main/login.php" class="HrefDecoration "><i aria-hidden="true">
                     <img src="Public\ProductIMGHighRes\login.png" alt="login" width="40" height="32">
+                    <?php }?>
                 </i>
                 <li>⠀</a>
                     <a href="/nerdygadgets-main/contact.php" class="HrefDecoration "><i aria-hidden="true">
@@ -79,7 +90,14 @@ $databaseConnection = connectToDatabase();
         <?php if ($_SESSION['totalPrice'] >= 100) {?>
         <div id="KortingFrame"><h6>Gebruik "5EUROKORTING" bij meer dan 100 euro.</h6>
         </div>
-        <?php } ?>
+        <?php }          
+            if(isset($_POST['uitloggen'])) 
+            {
+                unset ($_SESSION["email"]);
+                unset ($_SESSION["password"]);
+                unset ($_SESSION["KlantID"]);
+            }
+        ?>
     </div>
     <div class="row" id="Content">
         <div class="col-12">

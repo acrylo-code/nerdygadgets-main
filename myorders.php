@@ -42,25 +42,21 @@ function myorderss($KlandID){
         $productNaam = $product[0]['StockItemName'];
         $image = $product[0]['ImagePath'];
         $searchDetails = $product[0]['SearchDetails'];
-        // var_dump($login);
-        print("<br>");
-        var_dump($product);
 ?>
-
-        <div class="orderbox col-12" style="left: 7%">
+        <div class="orderbox">
       <?php print("<h3>".$productNaam."</h3>");
             print("<p>" . "Bestelnummer: ".$orderid." </p>");
             print("<p>" . "Besteldatum: ".$orderdatum."</p>");
             print("<p>" . "Beschrijving : ".$searchDetails."</p>");?>   
-        <div>
+        <div class="orderpicture">
             <img style="max-width: 100px;" src="/nerdygadgets-main/Public/StockItemIMG/<?php echo $image ?>" alt="">
         </div>
-        <div class="prijs">
+        <div class="orderprice">
         <?php
             print("<h3>" . "€" . "$prijs" . "</h3>");
         ?>
         </div>
-        <div style="padding : 10px">
+        <div class="orderreview">
         <?php 
         $reviews = selectPostedReviews($productID, $KlandID);
         if(isset($reviews[0]['ReviewID'])){

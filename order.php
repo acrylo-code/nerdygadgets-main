@@ -48,6 +48,12 @@
     $totalPrice = 0;
     foreach(getCartItems() as $productId => $product){
     $totalPrice += $product['SellPrice'] * $product['quantityInCart'];}
+    if(isset($_POST['uitloggen'])) 
+    {
+        unset ($_SESSION["email"]);
+        unset ($_SESSION["password"]);
+        unset ($_SESSION["idklant"]);
+    } 
     ?>
 
 
@@ -85,7 +91,17 @@
                             ?>
                         </tbody>
                     </table>
-                    <?php    if(isset($_SESSION['KlantID']) == false){ print('Je bent ingelogged!');}?>
+                    <?php    
+                    if(isset($_SESSION['KlantID']) != false){ 
+                        print('<a style="left: 500px" href="/nerdygadgets-main/order-functions.php?action=checkout" class="checkoutbtn">Bestellen</a>');
+                        ?>
+                        <form method="GET">
+                        <button type="submit" name="uitloggen" class="checkoutbtn">Uitloggen</button><br><br>
+                        </form>
+                        <?php
+                        print('<a style="left: 400px"> Je bent ingelogged en kan gelijk bestellen. </a>');
+                    } else {
+                    ?>
             <form method="post" action="/nerdygadgets-main/order-functions.php">
             <div class="row">
                 <div class="col-md-5">
@@ -153,6 +169,7 @@
                             </div>
                         </div>
                     </form>  
+                    <?php } ?>
                     </div>
                 </div>
                 </div>

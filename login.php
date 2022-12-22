@@ -1,15 +1,19 @@
 <?php
 include __DIR__ . "/header.php";
 
- if(isset($_POST['email']) && isset($_POST['password'])){
+if (isset($_SESSION['KlantID'])) {
+    header('Location: myorders.php');
+} else {
+    if(isset($_POST['email']) && isset($_POST['password'])){
 
-    $resultlogin = login($_POST['email'], $_POST['password']);
-    
-    if(isset($resultlogin)){
-        $_SESSION['KlantID'] = $resultlogin[0]['KlantID'];
-        header('Location: index.php');
-    } else {
-        echo "Invalid email or password";
+        $resultlogin = login($_POST['email'], $_POST['password']);
+        
+        if(isset($resultlogin)){
+            $_SESSION['KlantID'] = $resultlogin[0]['KlantID'];
+            header('Location: myorders.php');
+        } else {
+            echo "Invalid email or password";
+        }
     }
 }
 
