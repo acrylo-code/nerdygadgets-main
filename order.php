@@ -93,83 +93,11 @@
                     </table>
                     <?php    
                     if(isset($_SESSION['KlantID']) != false){ 
-                        print('<a style="left: 500px" href="/nerdygadgets-main/order-functions.php?action=checkout" class="checkoutbtn">Bestellen</a>');
+                        print('<a style="left: 500px" href="/nerdygadgets-main/order-functions.php?action=checkout" class="checkoutbtn">Bestellen</a><br><br>');
                         ?>
-                        <form method="GET">
-                        <button type="submit" name="uitloggen" class="checkoutbtn">Uitloggen</button><br><br>
-                        </form>
                         <?php
                         print('<a style="left: 400px"> Je bent ingelogged en kan gelijk bestellen. </a>');
-                    } else {
-                    ?>
-            <form method="post" action="/nerdygadgets-main/order-functions.php">
-            <div class="row">
-                <div class="col-md-5">
-                    <div class="orderpage__heading">
-                        <h4>Persoonlijke gegevens</h4>
-                        <?php print("<p style=color:red>".$_SESSION['error']."</p>");
-                        $_SESSION['error'] = "";
-                        ?>
-                    </div>
-                    <div class="orderpage__form">
-                        <div class="form-groups mb-4">
-                            <label>Voornaam *</label>
-                            <input type="text" name="Voornaam" required="" value="Voornaam">
-                        </div>
-                        <div class="d-flex">
-                            <div class="form-groups mb-4 mr-3">
-                                <label>Achternaam *</label>
-                                <input type="text" name="Achternaam" required="" value="Achternaam">
-                            </div>
-                            <div class="form-groups mb-2">
-                                <label>Tussenvoegsel</label>
-                                <input type="text" name="Tussenvoegsel">
-                            </div>
-                        </div>
-                        <div class="form-groups mb-2">
-                            <label>Email adres *</label>
-                            <input type="email" name="Email" required="" value="test@gmail.com">
-                        </div>
-                        <div class="form-groups mb-4">
-                            <label>Telefoonnummer</label>
-                            <input type="tel" name="Telefoonnummer" value="06-12345678">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 offset-1">
-                    <div class="orderpage__heading">
-                        <h4>Verzendadres</h4>
-                    </div>
-                    <div class="orderpage__form">
-                        <div class="form-groups mb-4 d-flex">
-                            <div class="orderpage__form-item mr-3">
-                                <label>Straatnaam *</label>
-                                <input type="text" name="Adres" value="straatnaam">
-                            </div>
-                            <div class="orderpage__form-item">
-                                <label>Huisnummer *</label>
-                                <input type="number" name="Huisnummer" value="2">
-                            </div>
-                        </div>
-                        <div class="form-groups mb-4 d-flex">
-                            <div class="orderpage__form-item mr-3">
-                                <label>Stad *</label>
-                                <input type="text" name="Woonplaats" value="stad">
-                            </div>
-                            <div class="orderpage__form-item">
-                                <label>Postcode *</label>
-                                <input type="text" name="Postcode" value="1234DE">
-                            </div>
-                        </div>
-                        <div class="mt-5 d-flex">
-                            <div class="col-6" style="position: relative;">
-                            <h3 class="StockItemNameViewSize StockItemName" style="position: absolute; bottom: -50px; left: 0;">Totaal: <?php echo '€' . number_format($_SESSION['totalPrice'], 2, ',', '.'); ?></h3>
-                                <input type="submit" value="Afrekenen" href="/nerdygadgets-main/order-functions.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: -300;">* zijn verplichte velden.</a>
-                                <!--<input type="button" value="Terug" href="/nerdygadgets-main/cart.php" class="btn btn-primary checkoutbtn" style="position: absolute; bottom: -100px; right: 300;"></a> -->
-                            </div>
-                        </div>
-                    </form>  
-                    <?php } ?>
+                    } ?>
                     </div>
                 </div>
                 </div>

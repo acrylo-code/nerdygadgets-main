@@ -192,6 +192,10 @@ function clearErrorMessages(){
     unset($_SESSION['errorMessages']);
 }
 
+function hasErrorMessages(){
+    return isset($_SESSION['errorMessages']);
+}
+
 // Geeft false terug als er geen foutmeldingen bekend zijn, een <ul> </ul> aan met list items (errors)
 // Laat wanneer je deze functie aanroept alle fouten op de pagina zien.
 // Want hij haalt automatisch de meldingen weg zodra ze "gezien" zijn.

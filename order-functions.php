@@ -76,25 +76,6 @@ if (isset($_GET['action'])) {
         }
     }
 }
-function register($klantgegevens){
-    // Haal het winkelwagentje op
-    $cart = getCart();
-    // Haal de database connectie op
-    $conn = connectToDatabase();
-    // Haal de huidige datum op
-    $currentDate = date("Y-m-d H:i:s");
-    // Maak een query voor het toevoegen aan het tabel "klantgegevens" maak gebruik van mysqli_stmt
-    $query = "INSERT INTO klantgegevens (Voornaam, Tussenvoegsel, Achternaam, Adres, Postcode, Woonplaats, Telefoonnummer, Email, Huisnummer) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    $statement = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($statement, "ssssssssi", $klantgegevens["Voornaam"],$klantgegevens["Tussenvoegsel"],$klantgegevens["Achternaam"], $klantgegevens["Adres"], $klantgegevens["Postcode"], $klantgegevens["Woonplaats"], $klantgegevens["Telefoonnummer"], $klantgegevens["Email"], $klantgegevens["Huisnummer"]);
-    
-    // Voer de query uit
-    mysqli_stmt_execute($statement);
-    // Haal het laatst toegevoegde KlantID op
-    $KlantID = mysqli_insert_id($conn);
-    print (mysqli_insert_id($conn));
-    $_SESSION['KlantID'] = $KlantID;
-}
 
 // Voorbeeld van een row waar de functie mee werkt, deze functie gebruik je in de addOrder functie.
 // $orderRow = [
@@ -126,12 +107,15 @@ function addOrder($KlantID){
     $conn = connectToDatabase();
     // Haal de huidige datum op
     $currentDate = date("Y-m-d H:i:s");
+    $orderTotaal = $_SESSION['totalPrice'];
     // Maak een query voor het toevoegen aan het tabel "orders" maak gebruik van mysqli_stmt
-    $query = "INSERT INTO bestellingen (KlantID, OrderDatum) VALUES (?, ?)";
+    $query = "INSERT INTO bestellingen (KlantID, OrderDatum, OrderTotaal) VALUES (?, ?, ?)";
     $statement = mysqli_prepare($conn, $query);
-    mysqli_stmt_bind_param($statement, "is", 
+    mysqli_stmt_bind_param($statement, "isi", 
         $KlantID, 
-        $currentDate);
+        $currentDate,
+        $orderTotaal
+    );
     // Voer de query uit
     mysqli_stmt_execute($statement);
     // Haal het laatst toegevoegde OrderID op
@@ -155,23 +139,15 @@ function addOrder($KlantID){
 function placeOrder($klantgegevens, $KlantID){
     // Haal de database connectie op
     $conn = connectToDatabase();
-    // Haal de huidige datum op
-    $currentDate = date("Y-m-d H:i:s");
-    // Haal de huidige gebruiker op
-    
-    // Gebruik de opgeslagen UserID om de bestelling te plaatsen
-    if(isset($KlantID)){
-        addOrder($KlantID);
-    } else{
-        //Gebruik $klantgegevens om een nieuwe bestelling te plaatsen voor een klant
+
+    if(isLoggedIn()){
         if(cartContainsItems()){
-            // Registreer de gebruiker met de gegevens uit $klantgegevens
-            register($klantgegevens);
-            // Haal de UserID op van de net geregistreerde gebruiker en zet deze vast in de sessie.
-            $KlantID = $_SESSION['KlantID'];
-            // Plaats de bestelling
-            addOrder($KlantID);
+            addOrder(getKlantId());
         }
+
+    } else{
+        addErrorMessage("Log a.u.b. in of maak een account aan om een bestelling te plaatsen.");
+        header("Location: login.php");
     }
 }
 

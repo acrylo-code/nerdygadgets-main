@@ -1,7 +1,6 @@
 <!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
 include __DIR__ . "/header.php";
-include __DIR__ . "/user-functions.php";
 ?>
 <link rel="stylesheet" href="/nerdygadgets-main/Public/CSS/review.css">
 <?php
@@ -121,7 +120,7 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
-                        <p class="StockItemPriceText"><b><?php if($StockItem['SellPrice'] > 0 ){print sprintf("€ %.2f", $StockItem['SellPrice']);} else { print("Product niet beschikbaar."); } ?></b></p>
+                        <p class="StockItemPriceText" ><b><?php if($StockItem['SellPrice'] > 0 ){print sprintf("€ %.2f", getProductPrice($StockItem['StockItemID']));} else { print("Product niet beschikbaar."); } ?></b></p>
                         <h6> Inclusief BTW </h6>
                         <a href="/nerdygadgets-main/cart.php?action=addToCart&productId=<?php echo $StockItem['StockItemID'] ?>">
                             <button class="btn btn-primary button" type="button">In winkelwagen</button>

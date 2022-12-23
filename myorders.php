@@ -1,23 +1,10 @@
 <?php
 include __DIR__ . "/header.php";
-include __DIR__ . "/user-functions.php";
 
-if(isLoggedIn()){
-    $KlandID = $_SESSION['KlantID'];
-    myorderss($KlandID);
-} else{
-    header('Location: /nerdygadgets-main/login.php');
-}
+
 ?>
 
-<!DOCTYPE html>
-<html>
-<link rel="stylesheet" href="/nerdygadgets-main/Public/CSS/review.css">
-<link rel="stylesheet" href="/nerdygadgets-main/Public/CSS/style.css">
-<head>
-<title>Mijn bestellingen</title>
-</head>
-<body>
+
 
 <?php
 function myorderss($KlandID){ 
@@ -31,7 +18,7 @@ function myorderss($KlandID){
     mysqli_stmt_execute($Statement);
     $result = mysqli_stmt_get_result($Statement);
     $resultlogin = mysqli_fetch_all($result, MYSQLI_ASSOC);
-
+    print("<br><br><br><br><br><br><br><br><br>");
     foreach ($resultlogin as $key => $login) 
     {
         $orderid = $login['OrderID'];
@@ -73,7 +60,7 @@ function myorderss($KlandID){
     return($resultlogin);
 }
 
-$result = myorderss($KlandID);
+$result = myorderss(getKlantID());
 
 function checkproducts($ProductID) {
     $conn = connectToDatabase();
@@ -89,7 +76,7 @@ function checkproducts($ProductID) {
     return($result);
 }
 
+
+
+include __DIR__ . "/footer.php";
 ?>
-</div>
-</body>
-</html>

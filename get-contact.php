@@ -47,27 +47,6 @@
 </style>    
 
 <?php
-$contactForm = [
-    "Voornaam" => $_POST['contactVoornaam'],
-    "Achternaam" => $_POST['contactAchternaam'],
-    "Email" => $_POST['contactMail'],
-    "Bericht" => $_POST['contactBericht']
-];
-
-if(isset($_POST['contactVoornaam']) && isset($_POST['contactAchternaam']) && isset($_POST['contactMail']) && isset($_POST['contactBericht'])){
-    // Test if string contains spaces
-    // Test if string contains spaces or other characters
-    if(preg_match("/^[a-zA-Z]*$/",$_POST['contactVoornaam']) && preg_match("/^[a-zA-Z]*$/",$_POST['contactAchternaam'])){
-      //goto order.php
-        sendContact($contactForm);
-        print ("<a style='color:#676EFF; position: absolute; left: 95px; top: 270px; width: 500px; font-size: 20px;'> Bericht is verzonden.</a>");
-    } else{
-        $_SESSION['error'] = "Voornaam en Achternaam geen spaties of andere karakters bevatten.";
-        header("Location: get-contact.php");
-    }
-    }
-
-
 function sendContact($contactForm){
     // Haal de database connectie op
     $conn = connectToDatabase();

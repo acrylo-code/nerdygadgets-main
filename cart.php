@@ -2,9 +2,6 @@
 <?php include_once __DIR__ . "/cart_functions.php"; ?>
 
 <?php
-    if(isset($_GET['action'])){
-        handleCartAction($_GET['action']);
-    }
     $conn = connectToDatabase();
 ?>
 
@@ -87,9 +84,9 @@
                                             </form>
                                         </td>
                                         <!-- format the price as: €49,99 -->
-                                        <td><?php echo '€' . number_format($product['SellPrice'], 2, ',', '.'); ?></td>
+                                        <td><?php echo '€' . number_format(getProductPrice($product['StockItemID']), 2, ',', '.'); ?></td>
                                         <!-- display total for that current item(s) -->
-                                        <td><?php echo '€' . number_format($product['SellPrice'] * $product['quantityInCart'], 2, ',', '.'); ?></td>
+                                        <td><?php echo '€' . number_format(getProductPrice($product['StockItemID']) * $product['quantityInCart'], 2, ',', '.'); ?></td>
                                         <!-- Totaal laten zien: -->
                                         <td>
                                             <form action="/nerdygadgets-main/cart.php">
