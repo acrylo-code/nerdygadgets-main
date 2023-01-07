@@ -1,6 +1,7 @@
 <!-- dit bestand bevat alle code voor de pagina die één product laat zien -->
 <?php
 include __DIR__ . "/header.php";
+$product = getProduct($_GET['id']);
 ?>
 <link rel="stylesheet" href="/nerdygadgets-main/Public/CSS/review.css">
 <?php
@@ -42,6 +43,43 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
         transform: translateY(4px);
     }
 </style>
+
+<div style="display: none;" id="discount"><?php echo $product['discount']; ?></div>
+<div style="display: none;" id="DiscountValidUntil"><?php echo $product['DiscountValidUntil']; ?></div>
+<div style="display: none;" id="DiscountIsPercentage"><?php echo $product['DiscountIsPercentage']; ?></div>
+
+<script>
+    var discount = document.getElementById("discount").innerHTML;
+    var DiscountValidUntil = document.getElementById("DiscountValidUntil").innerHTML;
+    var DiscountIsPercentage = document.getElementById("DiscountIsPercentage").innerHTML;
+    console.log(discount, DiscountValidUntil, DiscountIsPercentage);
+    
+    // If discount is not null, and the discount is still valid, change div#DiscountValidUntil to show how long the discount is valid, and count down.
+    if (discount != null && DiscountValidUntil > new Date().toISOString().slice(0, 10)) {
+        var countDownDate = new Date(DiscountValidUntil).getTime();
+        var x = setInterval(function () {
+            var now = new Date().getTime();
+            var distance = countDownDate - now;
+            var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("DiscountCountdown").innerHTML = "Korting is nog " +days + " dag(en) " + hours + " uur "
+                + minutes + " minuten geldig.";
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("DiscountCountdown").innerHTML = "Korting verlopen";
+            }
+        }, 1000);
+    }
+
+    // Change div#DiscountCountdown text color every 0.5 seconds from red to white;
+    setInterval(function () {
+        var element = document.getElementById("DiscountCountdown");
+        element.classList.toggle("text-danger");
+    }, 500);
+    
+</script>
 
 <div id="CenteredContent">
     <?php
@@ -120,7 +158,9 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
             <div id="StockItemHeaderLeft">
                 <div class="CenterPriceLeft">
                     <div class="CenterPriceLeftChild">
+                        
                         <p class="StockItemPriceText" ><b><?php if($StockItem['SellPrice'] > 0 ){print sprintf("€ %.2f", getProductPrice($StockItem['StockItemID']));} else { print("Product niet beschikbaar."); } ?></b></p>
+                        <div id="DiscountCountdown" style="text-align: right;"></div>
                         <h6> Inclusief BTW </h6>
                         <a href="/nerdygadgets-main/cart.php?action=addToCart&productId=<?php echo $StockItem['StockItemID'] ?>">
                             <button class="btn btn-primary button" type="button">In winkelwagen</button>

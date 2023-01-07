@@ -5,7 +5,7 @@
     <?php print("<p style=color:red>".$_SESSION['error']."</p>");
                         $_SESSION['error'] = "";
                         ?>
-        <form action="https://formsubmit.co/nink469@gmail.com" target=_blank method="post">
+        <form action="https://formsubmit.co/nerdygadgets.business@gmail.com" target=_blank method="post">
         <p class="StockItemName" style="color:#676EFF; position: absolute; left: 95px; top: 100px; width: 500px; font-size: 35px;" >Zoek Contact</p>
         <p style="color:#FFFFFF; position: absolute; left: 95px; top: 180px; width: 500px; font-size: 17px;" >Wilt u contact met ons opnemen?<br>Vul het formulier in en laat ons weten wat de reden is om contact op te nemen.</p>
         <input style="position: absolute; right: 400px; top: 120px; width: 210px; height: 30px;" placeholder = "Voornaam" type=Titel name="Klant Voornaam"><br><br>

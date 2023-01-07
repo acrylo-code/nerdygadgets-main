@@ -9,7 +9,9 @@
 include_once 'header.php';
 ?>
 <form action="/nerdygadgets-main/register.php" method="get">
+
     <div class="inputboxregister">
+    <?php if(hasErrorMessages()){ echo getErrorMessages(); clearErrorMessages(); } ?>
         <div class="registerTitle"> Registreren </div>
         <label>Voornaam</label>
         <input class="registerbox" type="Voornaam" name="Voornaam">

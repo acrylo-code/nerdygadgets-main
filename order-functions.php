@@ -47,14 +47,17 @@ if (isset($_GET['action'])) {
     }
 } else {
     if(isset($_POST['Voornaam']) && isset($_POST['Achternaam']) && isset($_POST['Adres']) && isset($_POST['Postcode']) && isset($_POST['Woonplaats']) && isset($_POST['Telefoonnummer']) && isset($_POST['Email']) && isset($_POST['Huisnummer'])){
-    // Test if string contains spaces
-    // Test if string contains spaces or other characters
+    // Test of de ingevoerde gegevens geldig zijn en geen spaties bevatten of andere ongewenste tekens
     if(!preg_match("/^[a-zA-Z]*$/",$_POST['Voornaam']) || !preg_match("/^[a-zA-Z]*$/",$_POST['Achternaam']) !== false 
     || strpos($_POST['Postcode']," ") !== false || strpos($_POST['Email']," ") !== false ||  strlen($_POST['Postcode']) != 6){
-    //goto order.php
+    // Als de gegevens niet geldig zijn, stuur de gebruiker terug naar de order pagina en geef een error
         $_SESSION['error'] = "Een veld is niet geldig.";
         header("Location: order.php");
     } else{
+        // Als de gegevens wel geldig zijn, voer de functie uit om de gegevens in de database te zetten
+        // en stuur de gebruiker door naar de betalingspagina
+        //eerst wordt de postcode gesplitst in 2 delen, de eerste 4 cijfers en de laatste 2 letters
+        // vervolgens wordt gekeken of de eerste 4 cijfers een getal zijn en de laatste 2 letters een letter
             $split_Postcode = str_split(strtoupper($_POST['Postcode']),4);
             $split_Postcode[0] = (preg_match("/^[0-9]{4}$/",$split_Postcode[0]));
             $split_Postcode[1] = (preg_match("/^[a-zA-Z]{2}$/",$split_Postcode[1]));
@@ -66,15 +69,23 @@ if (isset($_GET['action'])) {
                     window.location = "https://bankieren.rabobank.nl/welcome/"
                 </script>
                 <?php
+                // Als de bestelling is geplaatst, maak de winkelwagen leeg en zet de totale prijs op 0
                 $cart = [];
                 saveCart($cart);
                 $_SESSION['totalPrice'] = 0;
         } else {
+            // Als de postcode niet geldig is, stuur de gebruiker terug naar de order pagina en geef een error
             $_SESSION['error'] = "Een veld is niet geldig.";
             header("Location: order.php");
             }
         }
     }
+}
+
+function updateStock($StockItemID, $quantity){
+    $conn = connectToDatabase();
+    $query = $query = "UPDATE stockitemholdings SET QuantityOnHand = QuantityOnHand - $quantity WHERE StockItemID = $StockItemID";    
+    $result = mysqli_query($conn, $query);
 }
 
 // Voorbeeld van een row waar de functie mee werkt, deze functie gebruik je in de addOrder functie.
@@ -105,9 +116,12 @@ function addOrder($KlantID){
     $cart = getCart();
     // Haal de database connectie op
     $conn = connectToDatabase();
+    // Start the transaction
+    mysqli_begin_transaction($conn);
     // Haal de huidige datum op
     $currentDate = date("Y-m-d H:i:s");
     $orderTotaal = $_SESSION['totalPrice'];
+
     // Maak een query voor het toevoegen aan het tabel "orders" maak gebruik van mysqli_stmt
     $query = "INSERT INTO bestellingen (KlantID, OrderDatum, OrderTotaal) VALUES (?, ?, ?)";
     $statement = mysqli_prepare($conn, $query);
@@ -130,7 +144,10 @@ function addOrder($KlantID){
         //     "Prijs" => $cartItem["SellPrice"],
         // ];
         addOrderRow($orderId, $cartItem["StockItemID"], $cartItem["quantityInCart"], $cartItem["SellPrice"]);
+        updateStock($cartItem["StockItemID"], $cartItem["quantityInCart"]);
     }
+    // If all queries are successful, commit the transaction
+    mysqli_commit($conn);
 }
 
 

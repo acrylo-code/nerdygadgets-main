@@ -21,7 +21,7 @@ function addReview($review){
     $conn = connectToDatabase();
     // haal datum op
     $currentDate = date("Y-m-d H:i:s");
-    // Maak een query voor het toevoegen aan het tabel "orderregels" maak gebruik van mysqli_stmt
+    // Maak een query voor het toevoegen aan het tabel "reviews" maak gebruik van mysqli_stmt
     $query = "INSERT INTO reviews (StockItemID, KlantID, Review, Rating, Date, Title) VALUES (?, ?, ?, ?, ?, ?)";
     $statement = mysqli_prepare($conn, $query);
     mysqli_stmt_bind_param($statement, "iisiss", 

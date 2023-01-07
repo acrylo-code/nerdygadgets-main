@@ -124,7 +124,7 @@ switch ($_SERVER['PHP_SELF']) {
             if(!preg_match("/^[a-zA-Z]*$/",$_GET['Voornaam']) || !preg_match("/^[a-zA-Z]*$/",$_GET['Achternaam']) !== false 
                 || strpos($_GET['Postcode']," ") !== false || strpos($_GET['Email']," ") !== false ||  strlen($_GET['Postcode']) != 6){
                 //goto order.php
-                    print("Een veld is niet geldig.");
+                addErrorMessage("Een veld is niet geldig.");
                     header("Location: register.php");
                 } elseif (($_GET['Wachtwoord'] == $_GET['WachtwoordRepeat'])) {
                     if (isStrongPassword($_GET['Wachtwoord'])){
@@ -133,14 +133,14 @@ switch ($_SERVER['PHP_SELF']) {
                         $split_Postcode[1] = (preg_match("/^[a-zA-Z]{2}$/",$split_Postcode[1]));
                         if ($split_Postcode[0] == 1 && $split_Postcode[1] == 1){
                             register($inloggegevens);
-                            print ("Je bent geregistreerd.");
+                            addErrorMessage ("Je bent geregistreerd.");
                          } else {
                         print("Een veld is niet geldig.");
                         header("Location: order.php");
                         }
-                    } else { print ("Je wachtwoorden zijn niet sterk genoeg. Gebruik 8 tekens, en zorg dat er een cijfer, een speciaal teken, een hoofd- en een normale letter instaat.");}
-            } else {print("Je wachtwoordenzijn niet hetzelfde.") ;}
-        } else {print("Een veld is niet geldig.");}
+                    } else { addErrorMessage ("Je wachtwoorden zijn niet sterk genoeg. Gebruik 8 tekens, en zorg dat er een cijfer, een speciaal teken, een hoofd- en een normale letter instaat.");}
+            } else {addErrorMessage("Je wachtwoordenzijn niet hetzelfde.") ;}
+        } else {addErrorMessage("Een veld is niet geldig.");}
         break;
     // Registratie pagina checks einde
     // Contact pagina checks start
@@ -229,6 +229,11 @@ switch ($_SERVER['PHP_SELF']) {
                     <?php if (isset($_SESSION['KlantID'])) { ?>
                     <form method="post" action="header.php?logout=1">
                         <button type="submit" class="btn btn-primary btn_nerdy" style="margin-top: 20px" name="uitloggen">Uitloggen</button>
+                    </form>
+                    <?php } ?>
+                    <?php if (isAdmin(getKlantId())){ ?>
+                    <form method="post" action="manage-discounts.php">
+                        <button type="submit" name="uitloggen">Kortingen</button>
                     </form>
                     <?php } ?>
                 </liv>

@@ -86,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `reviews` (
 -- script om de img on de website te herstellen
 
 -- change the StockItems table, add a discount column and pupulate it with 0, use 0 as default
-ALTER TABLE stockitems ADD Discount INT DEFAULT 0 NOT NULL;
+ALTER TABLE stockitems ADD discount INT DEFAULT 0 NOT NULL;
 -- change the StockItems table, add a discountValidUntil, pupulate all existing rows with 0000-00-00 00:00
 ALTER TABLE stockitems ADD DiscountValidUntil DATETIME DEFAULT '0000-00-00 00:00' NOT NULL;
 -- change the StockItems table, add a discountIsPercentage column and pupulate it with 0, use 0 as default
@@ -115,25 +115,26 @@ VALUES (220, 'Chocolate.jpg');
 -- import time
 -- import requests
 
--- # url doorgeven en hoelang er gewacht moet worden
+-- # afkorting aanmaken voor sense_hat.SenseHat()
+-- sense = sense_hat.SenseHat()
+
+-- # standaard variabelen invullen voor de tijd en url
 -- wacht = 3  # second
 -- url = "http://192.168.33.15:80/nerdygadgets-main/temp.php?sensor=5&wachtwoord=938285693256&temp="
 
--- # afkorting voor sense_hat.SenseHat()
--- sense = sense_hat.SenseHat()
-
--- # aanmaken loop
+-- # aanmaken van de while loop
 
 -- while True:
 
---     # meet de temperatuur
+--     # meet de temperatuur met de sensehat
 --     temp = str(round(sense.get_temperature(), 1))
     
---     #post de temperatuur op de temp.php van de website
+--     #post de temperatuur op de temp.php van de website waardoor de temperatuur in de database komt
 --     temp = url+temp
 --     result = requests.get(temp)
+
+--     # print de temperatuur op de console
 --     print(result.text)
---     print("meting is verstuurd")
 
     
 --     # wacht 3 seconden
