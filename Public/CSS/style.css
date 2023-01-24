@@ -791,3 +791,27 @@ ul#ul-class-price li {
 .registerbox:hover {
     background-color: #4a53ff;
 }
+#simularproducts {
+    background-color: rgba(35, 40, 47, 0.8);
+    width: 69.5%;
+    float: left;
+    padding: 10px;
+    margin-left: 15%;
+    margin-top:10px;
+    border: 1px solid;
+    font-family: pt-sans, sans-serif;
+    font-size: 20px;
+    border-radius: 12px;
+    height: 330px;
+}
+
+#SimularItemsImage {
+    width: 250px;
+    height: 250px;
+    font-family: pt-sans, sans-serif;
+    color: rgb(0, 0, 0);
+    background-color: rgb(255, 255, 255);
+    float: left;
+    margin-right: 10px;
+    border-radius: 12%;
+}

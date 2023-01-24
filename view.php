@@ -8,6 +8,7 @@ $product = getProduct($_GET['id']);
 $StockItem = getStockItem($_GET['id'], connectToDatabase());
 $StockItemImage = getStockItemImage($_GET['id'], connectToDatabase()); 
 $ColdroomTemp = getColdroomTemp(connectToDatabase());
+$databaseConnection = connectToDatabase();
 
 foreach ($ColdroomTemp as $temp) {
     $temp = $temp['Temperature'];
@@ -282,3 +283,98 @@ $gemTemp = "<a class='StockItemName'>".$gemTemp."°C</a>, gemeten op ".$Coldroom
         ?><h2 id="ProductNotFound">Het opgevraagde product is niet gevonden.</h2><?php
     } ?>
 </div>
+<div>
+    <div id="simularproducts">
+        <h3>Vergelijkbare artikelen</h3>
+        <?php
+        //get the groupID of the item displayed on the page
+        $GroupID = getStockGroup($StockItem["StockItemID"]);
+        //get all the items with the same groupID
+        $simularitems = getSimularItems($GroupID[0]["StockGroupID"]);
+        //count all the items with that group ID in the array
+        $amoutOfItems = count($simularitems);
+
+        //loop 4 times to get 4 random items
+        for ($i = 0; $i < 4; $i++) {
+            //random number between 0 and the amount of items in the array
+            $random = rand(0, $amoutOfItems-1);
+            //get the itemID of the random item
+            $itemID = $simularitems[$random];
+            //get the image path of the selected random item
+            $ImagePath = getStockItemImage($itemID["StockItemID"],$databaseConnection);
+            //get the price/name/tax of the selected random item
+            $SimularItemPrice = getSimularItemPrice($itemID["StockItemID"]);
+            //calculate the price with tax
+
+            // array[
+            //      0 => array['RecommendedRetailPrice' => "15" ]
+            //      ]
+
+            $ItemPrice = $SimularItemPrice[0]['RecommendedRetailPrice']+($SimularItemPrice[0]['RecommendedRetailPrice'] * ($SimularItemPrice[0]['TaxRate'])/100);?>
+            <!--create a link to the item page-->
+            <a href='/nerdygadgets-main/view.php?id=<?php print($itemID["StockItemID"]) ?>'>
+            <!--Display the image, set the size and background position, print the name of the item and the price-->
+            <div id="SimularItemsImage" style="background-image: url('/nerdygadgets-main/Public/StockItemIMG/<?php print $ImagePath[0]['ImagePath']; ?>');
+             background-size: 250px; background-repeat: no-repeat; background-position: center;">
+             <?php print("<b>⠀".$SimularItemPrice[0]['StockItemName']."<br>".round($ItemPrice, 2)."</b>") ?></div>
+            </a>
+            <?php
+        }
+        ?>
+    </div>
+</div>
+
+
+
+<?php
+//get grouID from the item on the page
+function getStockGroup($ID) {
+    $databaseConnection = connectToDatabase();
+    $Query = "
+                SELECT StockGroupID
+                FROM stockitemstockgroups
+                WHERE StockItemID = ?";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $ID);
+    mysqli_stmt_execute($Statement);
+    $Result = mysqli_stmt_get_result($Statement);
+    $Result = mysqli_fetch_all($Result, MYSQLI_ASSOC);
+
+    return $Result;
+}
+
+//get all the items with same groupID
+function getSimularItems($GroupID) {
+    $databaseConnection = connectToDatabase();
+    $Query = "
+                SELECT StockItemID
+                FROM stockitemstockgroups
+                WHERE StockGroupID = ?";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $GroupID);
+    mysqli_stmt_execute($Statement);
+    $Result = mysqli_stmt_get_result($Statement);
+    $Result = mysqli_fetch_all($Result, MYSQLI_ASSOC);
+
+    return $Result;
+}
+
+//get the price of the item and the name
+function getSimularItemPrice($itemID) {
+    $databaseConnection = connectToDatabase();
+    $Query = "
+             SELECT StockItemName, RecommendedRetailPrice, StockItemID, TaxRate
+             FROM stockitems
+             Where StockItemID = ?";
+
+    $Statement = mysqli_prepare($databaseConnection, $Query);
+    mysqli_stmt_bind_param($Statement, "i", $itemID);
+    mysqli_stmt_execute($Statement);
+    $Result = mysqli_stmt_get_result($Statement);
+    $Result = mysqli_fetch_all($Result, MYSQLI_ASSOC);
+
+    return $Result;
+}
+?>

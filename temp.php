@@ -31,3 +31,5 @@ if(isset($_GET['wachtwoord']) && $_GET['temp'] && isset($_GET['sensor'])){
     }
 }
 
+
+
