@@ -113,16 +113,22 @@
                     <h3 style="position: absolute; bottom: 15px; right: 0;"class="StockItemName">Subtotaal: <?php echo '€' . number_format($totalPrice, 2, ',', '.'); ?></h3>
                             <!-- add a button to view cart -->
                             <?php
+                            //kijk of de kortingscode geplaatst is
                             if (isset($_POST["Kortingscode"])) {
                                 $code = $_POST["Kortingscode"];
+                                // controleer op sql injecties
                                 if (isStringVulnerable($code)) {
                                     echo "Kortingscode is niet geldig";
                                 } else {
+                                    //check met databaseof de kortingscode bestaat
                                     $korting = selectDiscountCode($code, $conn);
+                                    //als het een niet-procentuele korting is
                                     if ($korting[0]['Type'] == "aantal") {
+                                        //controleer of de korting niet in de min gaat
                                         if ($korting[0]['Aantal'] > $totalPrice) {
                                             echo "Kortingscode is niet geldig bij dit bedrag";
                                         } else {
+                                            //haal de kortingscode van de prijs af en bij de speciaale korting kijken we of de prijs meer dan 100 euro is
                                             if ($totalPrice >= 100 && $korting[0]['Code'] == "5EUROKORTING") {
                                                 $totalPrice = $totalPrice - $korting[0]['Aantal'];
                                             } elseif ($korting[0]['Code'] != "5EUROKORTING") {
@@ -131,16 +137,20 @@
                                                 echo "Kortingscode is niet geldig bij dit bedrag";
                                             }
                                         }
+                                        //als het een procentuele korting is
                                     } elseif ($korting[0]['Type'] == "procent") {
+                                        //kijk if de korting niet boven 100% uitkomt
                                         if ($korting[0]['Aantal'] > 100) {
                                             echo "Kortingscode is niet geldig";
                                         } else {
+                                            //haal de korting van de prijs af
                                             $totalPrice = $totalPrice * ((100 - $korting[0]['Aantal']) / 100);
                                         }
                                     } else {
                                         echo "Kortingscode is niet geldig";
                                     }
                                 }
+                                //sla de totaalprijs op in de sessie.
                             } $_SESSION['totalPrice'] = $totalPrice;
                             ## korting?>
                             
@@ -160,4 +170,7 @@
         </div>
     </div>
 </div>
-<?php include __DIR__ . "nerdygadgets-main/footer.php"; ?>
+<?php include __DIR__ . "nerdygadgets-main/footer.php"; 
+
+
+?>
