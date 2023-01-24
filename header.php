@@ -153,14 +153,13 @@ switch ($_SERVER['PHP_SELF']) {
         ];
         
         if(isset($_POST['contactVoornaam']) && isset($_POST['contactAchternaam']) && isset($_POST['contactMail']) && isset($_POST['contactBericht'])){
-            // Test if string contains spaces
-            // Test if string contains spaces or other characters
+            // Test if string contains characters
             if(preg_match("/^[a-zA-Z]*$/",$_POST['contactVoornaam']) && preg_match("/^[a-zA-Z]*$/",$_POST['contactAchternaam'])){
               //goto order.php
                 sendContact($contactForm);
                 print ("<a style='color:#676EFF; position: absolute; left: 95px; top: 270px; width: 500px; font-size: 20px;'> Bericht is verzonden.</a>");
             } else{
-                $_SESSION['error'] = "Voornaam en Achternaam geen spaties of andere karakters bevatten.";
+                $_SESSION['error'] = "Voornaam en Achternaam mogen geen speciale karakters bevatten.";
                 header("Location: get-contact.php");
             }
         }
@@ -258,7 +257,12 @@ switch ($_SERVER['PHP_SELF']) {
                 </li>                
             </ul>
         </div>
-        <?php if ($_SESSION['totalPrice'] >= 100) {?>
+        
+        <?php 
+        //kijk of de totale prijs meer dan 100 euro is
+        if ($_SESSION['totalPrice'] >= 100) {
+            //laat de kortingcode zien
+            ?>
         <div id="KortingFrame"><h6>Gebruik "5EUROKORTING" bij meer dan 100 euro.</h6>
         </div>
         <?php }          
